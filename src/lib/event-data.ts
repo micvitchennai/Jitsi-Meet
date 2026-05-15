@@ -10,6 +10,8 @@ export type EventCard = {
   metaIcon: string;
   type?: "Workshop" | "Hackathon";
   prize?: string;
+  date?: string;
+  time?: string;
 };
 
 export const departments: { name: string; accent: Accent; events: EventCard[] }[] = [
@@ -25,6 +27,8 @@ export const departments: { name: string; accent: Accent; events: EventCard[] }[
         accent: "blue",
         icon: "brush",
         metaIcon: "architecture",
+        date: "May 20, 2026",
+        time: "2:00 PM - 3:30 PM",
       },
       {
         title: "The AI UI Sprint",
@@ -34,6 +38,8 @@ export const departments: { name: string; accent: Accent; events: EventCard[] }[
         accent: "green",
         icon: "neurology",
         metaIcon: "bolt",
+        date: "May 22, 2026",
+        time: "3:00 PM - 4:45 PM",
       },
     ],
   },
@@ -49,6 +55,8 @@ export const departments: { name: string; accent: Accent; events: EventCard[] }[
         accent: "red",
         icon: "shield",
         metaIcon: "terminal",
+        date: "May 25, 2026",
+        time: "1:00 PM - 2:45 PM",
       },
       {
         title: "CTF Challenge",
@@ -58,6 +66,8 @@ export const departments: { name: string; accent: Accent; events: EventCard[] }[
         accent: "red",
         icon: "lock",
         metaIcon: "military_tech",
+        date: "May 27, 2026",
+        time: "4:00 PM - 5:30 PM",
       },
     ],
   },
@@ -73,6 +83,8 @@ export const departments: { name: string; accent: Accent; events: EventCard[] }[
         accent: "blue",
         icon: "layers",
         metaIcon: "database",
+        date: "May 29, 2026",
+        time: "2:00 PM - 4:00 PM",
       },
       {
         title: "Build Your Own Cryptocurrency",
@@ -82,6 +94,8 @@ export const departments: { name: string; accent: Accent; events: EventCard[] }[
         accent: "green",
         icon: "code",
         metaIcon: "link",
+        date: "June 1, 2026",
+        time: "3:00 PM - 5:00 PM",
       },
     ],
   },
@@ -97,6 +111,8 @@ export const departments: { name: string; accent: Accent; events: EventCard[] }[
         accent: "yellow",
         icon: "terminal",
         metaIcon: "psychology",
+        date: "June 3, 2026",
+        time: "1:30 PM - 3:30 PM",
       },
       {
         title: "Debug & Code Challenge",
@@ -106,6 +122,8 @@ export const departments: { name: string; accent: Accent; events: EventCard[] }[
         accent: "yellow",
         icon: "data_object",
         metaIcon: "history_edu",
+        date: "June 5, 2026",
+        time: "2:00 PM - 3:45 PM",
       },
     ],
   },
@@ -121,6 +139,8 @@ export const departments: { name: string; accent: Accent; events: EventCard[] }[
         accent: "yellow",
         icon: "smart_toy",
         metaIcon: "settings_input_component",
+        date: "June 7, 2026",
+        time: "10:00 AM - 11:45 AM",
       },
       {
         title: "Wikirace.AI",
@@ -130,6 +150,8 @@ export const departments: { name: string; accent: Accent; events: EventCard[] }[
         accent: "red",
         icon: "language",
         metaIcon: "speed",
+        date: "June 9, 2026",
+        time: "3:30 PM - 5:00 PM",
       },
     ],
   },
@@ -147,6 +169,8 @@ export const hackathons: EventCard[] = [
     metaIcon: "emoji_events",
     type: "Hackathon",
     prize: "Grand Prize: TBD",
+    date: "June 15, 2026",
+    time: "9:00 AM - 6:00 PM",
   },
   {
     title: "Hackathon Event TBD",
@@ -159,5 +183,7 @@ export const hackathons: EventCard[] = [
     metaIcon: "bolt",
     type: "Hackathon",
     prize: "Prize: Tech Rewards",
+    date: "June 22, 2026",
+    time: "9:00 AM - 6:00 PM",
   },
 ];

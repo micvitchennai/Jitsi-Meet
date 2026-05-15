@@ -10,6 +10,8 @@ const RegistrationSchema = new Schema({
   },
   registrationNumber: { type: String, trim: true },
   schoolCollegeName: { type: String, trim: true },
+  institutionType: { type: String, enum: ["College", "School"] },
+  grade: { type: String, trim: true },
   registeredAt: { type: Date, default: Date.now },
 });
 

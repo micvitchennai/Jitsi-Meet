@@ -79,6 +79,8 @@ export function ScheduleClient({
         {/* Upcoming Events — Retro Category Grid */}
         <UpcomingEventsSection
           onCardClick={(event) => setSelectedStaticEvent(event)}
+          filter={filter}
+          allEvents={initialEvents}
         />
 
         {selectedEvent && (
@@ -181,7 +183,23 @@ function LiveEventSection({
 
 // ─── Upcoming Events Section (Retro Category Grid) ───────────────────────────
 
-function UpcomingEventsSection({ onCardClick }: { onCardClick: (event: EventCard) => void }) {
+function UpcomingEventsSection({ 
+  onCardClick, 
+  filter,
+  allEvents 
+}: { 
+  onCardClick: (event: EventCard) => void; 
+  filter: string;
+  allEvents: SerializedEvent[];
+}) {
+  const departmentMap: Record<string, string> = {
+    "UI/UX": "UI/UX",
+    CP: "Competitive Programming",
+    CyberSec: "Cybersecurity",
+    Dev: "Development",
+  };
+  const filteredDepartments = filter === "All" ? departments : departments.filter((dept) => departmentMap[filter] === dept.name);
+
   return (
     <section className="event-section">
       {/* Section heading */}
@@ -194,18 +212,25 @@ function UpcomingEventsSection({ onCardClick }: { onCardClick: (event: EventCard
 
       <div className="space-y-16">
         {/* Workshop Categories */}
-        {departments.map((dept) => (
+        {filteredDepartments.map((dept) => (
           <CategoryBlock
             key={dept.name}
             name={dept.name}
             accent={dept.accent}
             events={dept.events}
             onCardClick={onCardClick}
+            allEvents={allEvents}
           />
         ))}
 
         {/* Hackathons */}
-        <HackathonBlock events={hackathons} onCardClick={onCardClick} />
+        {(filter === "All" || filter === "Hackathon") && (
+          <HackathonBlock 
+            events={hackathons} 
+            onCardClick={onCardClick} 
+            allEvents={allEvents}
+          />
+        )}
       </div>
     </section>
   );
@@ -225,11 +250,13 @@ function CategoryBlock({
   accent,
   events,
   onCardClick,
+  allEvents,
 }: {
   name: string;
   accent: "blue" | "green" | "red" | "yellow";
   events: EventCard[];
   onCardClick: (event: EventCard) => void;
+  allEvents: SerializedEvent[];
 }) {
   const colors = accentColors[accent];
 
@@ -250,14 +277,20 @@ function CategoryBlock({
 
       {/* Event cards grid — 2 per row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        {events.map((event, i) => (
-          <RetroEventCard
-            key={i}
-            event={event}
-            accent={accent}
-            onCardClick={onCardClick}
-          />
-        ))}
+        {events.map((event, i) => {
+          const realEvent = allEvents.find(e => e.title === event.title);
+          const isEnded = realEvent ? getStatus(realEvent.startTime, realEvent.endTime) === "Ended" : false;
+          
+          return (
+            <RetroEventCard
+              key={i}
+              event={event}
+              accent={accent}
+              onCardClick={onCardClick}
+              isEnded={isEnded}
+            />
+          );
+        })}
       </div>
     </div>
   );
@@ -268,9 +301,11 @@ function CategoryBlock({
 function HackathonBlock({
   events,
   onCardClick,
+  allEvents,
 }: {
   events: EventCard[];
   onCardClick: (event: EventCard) => void;
+  allEvents: SerializedEvent[];
 }) {
   return (
     <div>
@@ -280,9 +315,18 @@ function HackathonBlock({
         </h3>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        {events.map((event, i) => (
-          <HackathonEventCard key={i} event={event} onCardClick={onCardClick} />
-        ))}
+        {events.map((event, i) => {
+          const realEvent = allEvents.find(e => e.title === event.title);
+          const isEnded = realEvent ? getStatus(realEvent.startTime, realEvent.endTime) === "Ended" : false;
+          return (
+            <HackathonEventCard 
+              key={i} 
+              event={event} 
+              onCardClick={onCardClick} 
+              isEnded={isEnded}
+            />
+          );
+        })}
       </div>
     </div>
   );
@@ -294,10 +338,12 @@ function RetroEventCard({
   event,
   accent,
   onCardClick,
+  isEnded,
 }: {
   event: EventCard;
   accent: "blue" | "green" | "red" | "yellow";
   onCardClick: (event: EventCard) => void;
+  isEnded?: boolean;
 }) {
   const colors = accentColors[accent];
   const eventAccentColors = accentColors[event.accent] ?? colors;
@@ -319,6 +365,9 @@ function RetroEventCard({
         transition: "transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease",
         position: "relative",
         color: "var(--arcade-foreground)",
+        opacity: isEnded ? 0.4 : 1,
+        filter: isEnded ? "grayscale(1) brightness(0.8)" : "none",
+        pointerEvents: isEnded ? "none" : "auto",
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-4px)";
@@ -339,10 +388,17 @@ function RetroEventCard({
         </span>
         <SymbolIcon
           name={event.icon}
-          className={eventAccentColors.text}
+          className={isEnded ? "text-arcade-muted" : eventAccentColors.text}
           style={{ width: "1.2em", height: "1.2em" }}
         />
       </div>
+
+      {/* Status Badge for Ended */}
+      {isEnded && (
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%) rotate(-15deg)", border: "4px solid #ea4335", color: "#ea4335", padding: "4px 12px", fontWeight: 900, fontSize: "1.5rem", zIndex: 10, opacity: 0.8, pointerEvents: "none", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+          COMPLETED
+        </div>
+      )}
 
       {/* Title */}
       <div style={{ flex: 1 }}>
@@ -389,9 +445,11 @@ function RetroEventCard({
 function HackathonEventCard({
   event,
   onCardClick,
+  isEnded,
 }: {
   event: EventCard;
   onCardClick: (event: EventCard) => void;
+  isEnded?: boolean;
 }) {
   return (
     <button
@@ -411,6 +469,9 @@ function HackathonEventCard({
         position: "relative",
         overflow: "hidden",
         color: "var(--arcade-foreground)",
+        opacity: isEnded ? 0.4 : 1,
+        filter: isEnded ? "grayscale(1) brightness(0.8)" : "none",
+        pointerEvents: isEnded ? "none" : "auto",
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-4px)";
@@ -439,6 +500,13 @@ function HackathonEventCard({
       >
         Special Event
       </span>
+
+      {/* Status Badge for Ended */}
+      {isEnded && (
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%) rotate(-15deg)", border: "4px solid #ea4335", color: "#ea4335", padding: "4px 12px", fontWeight: 900, fontSize: "1.5rem", zIndex: 10, opacity: 0.8, pointerEvents: "none", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+          COMPLETED
+        </div>
+      )}
 
       {/* Body */}
       <div style={{ flex: 1 }}>
@@ -646,6 +714,22 @@ function StaticEventModal({
             <p className="dialog-description" style={{ fontSize: "1rem", lineHeight: 1.65 }}>
               {event.description}
             </p>
+
+            {/* Date and Time */}
+            {(event.date || event.time) && (
+              <div style={{ marginTop: "12px", fontSize: "0.95rem", lineHeight: 1.6, color: "var(--arcade-muted)" }}>
+                {event.date && (
+                  <p style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ fontWeight: 700 }}>📅</span> {event.date}
+                  </p>
+                )}
+                {event.time && (
+                  <p style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ fontWeight: 700 }}>🕐</span> {event.time}
+                  </p>
+                )}
+              </div>
+            )}
 
             {event.prize && (
               <div
