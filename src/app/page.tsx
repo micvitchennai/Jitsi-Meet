@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { Calendar, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 
 import { connectToDatabase } from "@/lib/mongodb";
 import Event from "@/models/Event";

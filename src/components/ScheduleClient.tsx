@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Calendar, Video, ArrowRight, ExternalLink, UserPlus } from "lucide-react";
+import { Calendar, Video, ExternalLink, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatEventWindow, getStatus, type SerializedEvent } from "@/lib/events";
 import Link from "next/link";
@@ -21,13 +21,10 @@ export function ScheduleClient({
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   const [filter, setFilter] = useState<string>("All");
-  const [tick, setTick] = useState(0);
 
   // Auto-refresh status every 30s
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTick(t => t + 1);
-    }, 30000);
+    const interval = setInterval(() => {}, 30000);
     return () => clearInterval(interval);
   }, []);
 

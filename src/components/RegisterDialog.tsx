@@ -84,10 +84,11 @@ export function RegisterDialog({
       });
       onSuccess();
       onClose();
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Failed to register";
       toast({
         title: "Registration Failed",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     } finally {
