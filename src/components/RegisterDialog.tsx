@@ -28,7 +28,9 @@ import { Loader2 } from "lucide-react";
 const formSchema = z.object({
   mobileNumber: z.string().regex(/^[6-9]\d{9}$/, "Please provide a valid 10-digit Indian mobile number."),
   registrationNumber: z.string().min(1, "Registration number is required."),
+  institutionType: z.enum(["College", "School"]),
   schoolCollegeName: z.string().optional(),
+  grade: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -56,9 +58,14 @@ export function RegisterDialog({
     defaultValues: {
       mobileNumber: "",
       registrationNumber: "",
+      institutionType: "College",
       schoolCollegeName: isVitStudent ? "Vellore Institute Of Technology" : "",
+      grade: "",
     },
   });
+
+  const institutionType = form.watch("institutionType");
+
 
   async function onSubmit(values: FormValues) {
     setLoading(true);
@@ -134,15 +141,52 @@ export function RegisterDialog({
                 </FormItem>
               )}
             />
-            {!isVitStudent && (
+            <FormField
+              control={form.control}
+              name="institutionType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Institution Type</FormLabel>
+                  <FormControl>
+                    <select {...field} className="bg-white/5 border-white/10 text-white">
+                      <option value="College">College</option>
+                      <option value="School">School</option>
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {institutionType === "College" && (
               <FormField
                 control={form.control}
                 name="schoolCollegeName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>School/College Name</FormLabel>
+                    <FormLabel>College Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your Institution" {...field} className="bg-white/5 border-white/10 text-white" />
+                      <Input placeholder={isVitStudent ? "Vellore Institute Of Technology" : "College Name"} {...field} className="bg-white/5 border-white/10 text-white" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+            {institutionType === "School" && (
+              <FormField
+                control={form.control}
+                name="grade"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Grade</FormLabel>
+                    <FormControl>
+                      <select {...field} className="bg-white/5 border-white/10 text-white">
+                        <option value="">Select grade</option>
+                        <option value="10th">10th</option>
+                        <option value="11th">11th</option>
+                        <option value="12th">12th</option>
+                        <option value="Other">Other</option>
+                      </select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

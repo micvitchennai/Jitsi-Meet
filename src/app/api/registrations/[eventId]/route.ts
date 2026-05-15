@@ -26,6 +26,8 @@ export async function GET(_request: Request, { params }: Params) {
       mobileNumber: registration.mobileNumber,
       registrationNumber: registration.registrationNumber,
       schoolCollegeName: registration.schoolCollegeName,
+      institutionType: (registration as any).institutionType,
+      grade: (registration as any).grade,
       registeredAt: registration.registeredAt?.toISOString(),
     })),
   });

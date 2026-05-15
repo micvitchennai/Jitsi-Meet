@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Sign in required" }, { status: 401 });
   }
 
-  const { eventId, mobileNumber, registrationNumber, schoolCollegeName } = await request.json();
+  const { eventId, mobileNumber, registrationNumber, schoolCollegeName, institutionType, grade } = await request.json();
   if (!eventId) return NextResponse.json({ message: "eventId is required" }, { status: 400 });
 
   const profileSubmission = buildProfileSubmission({
@@ -35,6 +35,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Please provide your school or college name." }, { status: 400 });
   }
 
+  // Validate grade for school registrations
+  if (institutionType === "School" && !grade) {
+    return NextResponse.json({ message: "Please provide your grade." }, { status: 400 });
+  }
+
   await connectToDatabase();
   const event = await Event.findOne({ _id: eventId, isPublished: true });
   if (!event) return NextResponse.json({ message: "Event not found" }, { status: 404 });
@@ -49,6 +54,8 @@ export async function POST(request: Request) {
       mobileNumber: profileSubmission.mobileNumber,
       registrationNumber: profileSubmission.registrationNumber,
       schoolCollegeName: profileSubmission.schoolCollegeName,
+      institutionType,
+      grade,
     });
     return NextResponse.json({ registration: { eventId: String(registration.eventId) } }, { status: 201 });
   } catch (error: unknown) {
