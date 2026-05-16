@@ -24,6 +24,11 @@ export function Navbar() {
           <Link href="/schedule" className={cn("hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex")}>
             Schedule
           </Link>
+          {status === "authenticated" ? (
+            <Link href="/dashboard" className="hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex">
+              Dashboard
+            </Link>
+          ) : null}
           {session?.user.role === "admin" ? (
             <Link href="/admin" className="hidden items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex">
               <ShieldCheck className="h-4 w-4" />

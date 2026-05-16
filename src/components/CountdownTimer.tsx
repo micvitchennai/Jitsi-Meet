@@ -15,9 +15,12 @@ export function CountdownTimer({ target, compact = false }: { target: string; co
   const [timeLeft, setTimeLeft] = React.useState<ReturnType<typeof getTimeLeft> | null>(null);
 
   React.useEffect(() => {
-    setTimeLeft(getTimeLeft(target));
+    const timeout = window.setTimeout(() => setTimeLeft(getTimeLeft(target)), 0);
     const interval = window.setInterval(() => setTimeLeft(getTimeLeft(target)), 1000);
-    return () => window.clearInterval(interval);
+    return () => {
+      window.clearTimeout(timeout);
+      window.clearInterval(interval);
+    };
   }, [target]);
 
   if (!timeLeft) return null;
@@ -42,7 +45,7 @@ export function CountdownTimer({ target, compact = false }: { target: string; co
 
   return (
     <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
-      {timeUnits.map((unit, index) => (
+      {timeUnits.map((unit) => (
         <div key={unit.label} className="flex flex-col items-center group">
           <div className="relative">
             {/* Outer Glow */}
