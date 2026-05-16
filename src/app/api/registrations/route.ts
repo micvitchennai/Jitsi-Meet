@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { isValidObjectId } from "mongoose";
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
 import { getStatus } from "@/lib/events";
@@ -15,8 +16,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Sign in required" }, { status: 401 });
   }
 
-  const { eventId, mobileNumber, registrationNumber, schoolCollegeName, institutionType, grade } = await request.json();
+  const { eventId, mobileNumber, registrationNumber, schoolCollegeName, institutionType, grade, year } = await request.json();
   if (!eventId) return NextResponse.json({ message: "eventId is required" }, { status: 400 });
+  if (!isValidObjectId(eventId)) return NextResponse.json({ message: "Event not found" }, { status: 404 });
+  if (institutionType !== "College" && institutionType !== "School") {
+    return NextResponse.json({ message: "Please select school or college." }, { status: 400 });
+  }
 
   const profileSubmission = buildProfileSubmission({
     email: session.user.email.toLowerCase(),
@@ -39,11 +44,21 @@ export async function POST(request: Request) {
   if (institutionType === "School" && !grade) {
     return NextResponse.json({ message: "Please provide your grade." }, { status: 400 });
   }
+  if (institutionType === "School" && !["10th", "11th", "12th"].includes(grade)) {
+    return NextResponse.json({ message: "Please select a valid grade." }, { status: 400 });
+  }
+
+  if (institutionType === "College" && !year) {
+    return NextResponse.json({ message: "Please provide your college year." }, { status: 400 });
+  }
+  if (institutionType === "College" && !["1st Year", "2nd Year", "3rd Year", "4th Year", "Other"].includes(year)) {
+    return NextResponse.json({ message: "Please select a valid college year." }, { status: 400 });
+  }
 
   await connectToDatabase();
   const event = await Event.findOne({ _id: eventId, isPublished: true });
   if (!event) return NextResponse.json({ message: "Event not found" }, { status: 404 });
-  if (getStatus(event.startTime, event.endTime) !== "Upcoming") {
+  if (getStatus(event.startTime, event.endTime, event.statusOverride) !== "Upcoming") {
     return NextResponse.json({ message: "Registration is only open before the event starts" }, { status: 400 });
   }
 
@@ -56,6 +71,7 @@ export async function POST(request: Request) {
       schoolCollegeName: profileSubmission.schoolCollegeName,
       institutionType,
       grade,
+      year,
     });
     return NextResponse.json({ registration: { eventId: String(registration.eventId) } }, { status: 201 });
   } catch (error: unknown) {
