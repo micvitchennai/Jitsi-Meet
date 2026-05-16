@@ -12,7 +12,12 @@ const RegistrationSchema = new Schema({
   schoolCollegeName: { type: String, trim: true },
   institutionType: { type: String, enum: ["College", "School"] },
   grade: { type: String, trim: true },
+  year: { type: String, trim: true },
   registeredAt: { type: Date, default: Date.now },
+  meetHistory: [{
+    joinedAt: { type: Date },
+    leftAt: { type: Date }
+  }]
 });
 
 RegistrationSchema.index({ eventId: 1, userId: 1 }, { unique: true });
