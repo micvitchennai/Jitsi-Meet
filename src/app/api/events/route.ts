@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
-import { DOMAINS, EVENT_TYPES, serializeEvent } from "@/lib/events";
+import { generateRoomName, serializeEvent } from "@/lib/events";
 import { ensureSeedEvents } from "@/lib/seed";
 import Event from "@/models/Event";
 
@@ -26,28 +26,49 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const requiredFields = ["title", "domain", "type", "startTime", "endTime", "roomName"];
-  const missing = requiredFields.find((field) => !body[field]);
-  if (missing) return NextResponse.json({ message: `${missing} is required` }, { status: 400 });
-  if (!DOMAINS.includes(body.domain)) return NextResponse.json({ message: "Invalid domain" }, { status: 400 });
-  if (!EVENT_TYPES.includes(body.type)) return NextResponse.json({ message: "Invalid event type" }, { status: 400 });
+  const title = typeof body.title === "string" ? body.title.trim() : "";
+  const description = typeof body.description === "string" ? body.description.trim() : "";
+  const roomName = typeof body.roomName === "string" ? body.roomName.trim() : "";
+
+  const requiredFields = [
+    ["title", title],
+    ["description", description],
+    ["domain", body.domain],
+    ["type", body.type],
+    ["startTime", body.startTime],
+    ["endTime", body.endTime],
+    ["roomName", roomName],
+  ] as const;
+  const missing = requiredFields.filter(f => f[0] !== "roomName").find((field) => !field[1]);
+  if (missing) return NextResponse.json({ message: `${missing[0]} is required` }, { status: 400 });
 
   const startTime = new Date(body.startTime);
   const endTime = new Date(body.endTime);
+  
+  const finalRoomName = roomName || generateRoomName(body.domain, body.type, startTime);
   if (Number.isNaN(startTime.getTime()) || Number.isNaN(endTime.getTime()) || startTime >= endTime) {
     return NextResponse.json({ message: "Event times are invalid" }, { status: 400 });
   }
 
   await connectToDatabase();
-  const event = await Event.create({
-    title: body.title,
-    domain: body.domain,
-    type: body.type,
-    startTime,
-    endTime,
-    roomName: body.roomName,
-    isPublished: Boolean(body.isPublished),
-  });
+  try {
+    const event = await Event.create({
+      title,
+      description,
+      domain: body.domain,
+      type: body.type,
+      startTime,
+      endTime,
+      roomName: finalRoomName,
+      statusOverride: body.statusOverride === "live" || body.statusOverride === "ended" ? body.statusOverride : "auto",
+      isPublished: Boolean(body.isPublished),
+    });
 
-  return NextResponse.json({ event: serializeEvent(event) }, { status: 201 });
+    return NextResponse.json({ event: serializeEvent(event) }, { status: 201 });
+  } catch (error: unknown) {
+    if (typeof error === "object" && error && "code" in error && error.code === 11000) {
+      return NextResponse.json({ message: "An event with this meet room already exists" }, { status: 409 });
+    }
+    throw error;
+  }
 }
