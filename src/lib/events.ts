@@ -8,16 +8,26 @@ export type EventStatus = "Upcoming" | "Live" | "Ended";
 export type SerializedEvent = {
   _id: string;
   title: string;
+  description: string;
   domain: Domain;
   type: EventType;
   startTime: string;
   endTime: string;
   roomName: string;
+  statusOverride: "auto" | "live" | "ended";
+  isLive: boolean;
   isPublished: boolean;
   createdAt?: string;
 };
 
-export function getStatus(startTime: Date | string, endTime: Date | string): EventStatus {
+export function getStatus(
+  startTime: Date | string,
+  endTime: Date | string,
+  statusOverride: "auto" | "live" | "ended" = "auto",
+): EventStatus {
+  if (statusOverride === "live") return "Live";
+  if (statusOverride === "ended") return "Ended";
+
   const now = new Date();
   const startsAt = new Date(startTime);
   const endsAt = new Date(endTime);
@@ -55,23 +65,44 @@ export function formatEventWindow(startTime: Date | string, endTime: Date | stri
 export function serializeEvent(event: {
   _id: unknown;
   title: string;
+  description?: string;
   domain: Domain;
   type: EventType;
   startTime: Date;
   endTime: Date;
   roomName: string;
+  statusOverride?: "auto" | "live" | "ended";
+  isLive: boolean;
   isPublished: boolean;
   createdAt?: Date;
 }): SerializedEvent {
   return {
     _id: String(event._id),
     title: event.title,
+    description: event.description ?? "",
     domain: event.domain,
     type: event.type,
     startTime: event.startTime.toISOString(),
     endTime: event.endTime.toISOString(),
     roomName: event.roomName,
+    statusOverride: event.statusOverride ?? "auto",
+    isLive: event.isLive,
     isPublished: event.isPublished,
     createdAt: event.createdAt?.toISOString(),
   };
+}
+
+export function getMeetUrl(roomName: string) {
+  const server = process.env.NEXT_PUBLIC_JITSI_SERVER || "https://meet.microsoftinnovations.club";
+  return `${server.replace(/\/$/, "")}/${roomName}`;
+}
+
+export function generateRoomName(domain: string, type: string, startTime: string | Date) {
+  const date = new Date(startTime);
+  const day = date.getDate();
+  const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  const month = months[date.getMonth()];
+  const domainSlug = domain.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const typeSlug = type.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return `${domainSlug}-${typeSlug}-${day}${month}`;
 }

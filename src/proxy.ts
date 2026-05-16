@@ -8,11 +8,12 @@ export default withAuth({
     authorized({ token, req }) {
       const pathname = req.nextUrl.pathname;
       if (pathname.startsWith("/admin")) return token?.role === "admin";
+      if (pathname.startsWith("/dashboard")) return Boolean(token);
       return Boolean(token);
     },
   },
 });
 
 export const config = {
-  matcher: ["/admin/:path*", "/schedule/:path*"],
+  matcher: ["/admin/:path*", "/dashboard/:path*"],
 };
