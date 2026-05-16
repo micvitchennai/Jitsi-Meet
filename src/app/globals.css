@@ -548,6 +548,12 @@ body {
   z-index: 110;
 }
 
+.dialog-content select,
+.dialog-content option {
+  background: #08090d;
+  color: #fff;
+}
+
 .modal-panel {
   background: rgba(18, 19, 27, 0.98);
   border: 2px solid var(--arcade-primary, #ffafd5);
@@ -792,6 +798,32 @@ body {
 
   .schedule-retro .hero {
     min-height: 300px;
+  }
+
+  .schedule-retro .event-section {
+    margin-top: 52px;
+  }
+
+  .schedule-retro .event-card,
+  .schedule-retro .hack-card,
+  .modal-panel {
+    padding: 18px;
+  }
+
+  .dialog-content {
+    max-height: calc(100dvh - 24px);
+    top: 12px;
+    transform: translateX(-50%);
+    width: calc(100vw - 24px);
+  }
+
+  .dialog-title {
+    font-size: 1.5rem;
+  }
+
+  .dialog-footer,
+  .modal-actions {
+    flex-direction: column;
   }
 
   .modal-stats {
