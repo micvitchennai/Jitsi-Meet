@@ -178,7 +178,10 @@ export function AdminClient({ initialEvents }: { initialEvents: SerializedEvent[
                     <CardDescription>{date} · {time} · {event.roomName}</CardDescription>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <Button variant="outline" size="sm" onClick={() => setEditing(event)}>
+                    <Button variant="outline" size="sm" onClick={() => {
+                      setEditing(event);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}>
                       <Edit className="h-4 w-4" />
                       Edit
                     </Button>
@@ -216,6 +219,10 @@ export function AdminClient({ initialEvents }: { initialEvents: SerializedEvent[
                 {loadingParticipants === event._id ? <Skeleton className="mt-4 h-16" /> : null}
                 {list ? (
                   <div className="mt-4 rounded-md border">
+                    <div className="bg-muted/50 p-2 px-4 border-b flex justify-between text-xs font-bold text-muted-foreground">
+                      <span>{list.length} {list.length === 1 ? 'REGISTRATION' : 'REGISTRATIONS'}</span>
+                      <span>{list.filter(p => p.meetHistory && p.meetHistory.length > 0).length} ATTENDED</span>
+                    </div>
                     {list.length === 0 ? (
                       <p className="p-4 text-sm text-muted-foreground">No registrations yet.</p>
                     ) : (
@@ -225,9 +232,20 @@ export function AdminClient({ initialEvents }: { initialEvents: SerializedEvent[
                             <p className="font-medium">{participant.user?.name || "Registered member"}</p>
                             <p className="text-sm text-muted-foreground">{participant.user?.email}</p>
                           </div>
-                          <p className="text-xs text-muted-foreground">
-                            {participant.registeredAt ? new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeStyle: "short" }).format(new Date(participant.registeredAt)) : ""}
-                          </p>
+                          <div className="text-right">
+                            <p className="text-xs text-muted-foreground">
+                              {participant.registeredAt ? new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeStyle: "short" }).format(new Date(participant.registeredAt)) : ""}
+                            </p>
+                            {participant.meetHistory && participant.meetHistory.length > 0 ? (
+                              <span className="inline-flex mt-1 items-center rounded-full bg-green-500/10 px-2 py-0.5 text-[10px] font-bold text-green-500">
+                                ATTENDED
+                              </span>
+                            ) : (
+                              <span className="inline-flex mt-1 items-center rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground">
+                                ABSENT
+                              </span>
+                            )}
+                          </div>
                         </div>
                       ))
                     )}
