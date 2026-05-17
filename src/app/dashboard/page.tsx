@@ -34,7 +34,6 @@ export default async function DashboardPage() {
     <div className="schedule-retro relative min-h-screen">
       <div className="stars-container" />
       <div className="neon-grid" />
-      <div className="scanline-overlay" />
       <main className="main-shell relative z-10 py-12">
         <section className="hero mb-12">
           <h1 className="text-4xl font-black tracking-widest text-[#ffafd5]">MY EVENTS</h1>

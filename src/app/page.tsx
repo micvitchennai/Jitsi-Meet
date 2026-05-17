@@ -22,7 +22,6 @@ export default async function LandingPage() {
       <div className="stars-container" />
       <div className="neon-grid" />
       <div className="synth-sun" />
-      <div className="scanline-overlay" />
       
       {/* Floating Retro Icons (Decorative) */}
       <div className="main-shell flex flex-col items-center justify-center pt-20">

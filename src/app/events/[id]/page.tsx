@@ -62,7 +62,6 @@ export default async function EventDetailPage({ params }: PageProps) {
     <div className="schedule-retro relative min-h-screen">
       <div className="stars-container" />
       <div className="neon-grid" />
-      <div className="scanline-overlay" />
       <main className="main-shell relative z-10 py-12">
         <Link href="/schedule" className="text-sm font-bold tracking-widest text-arcade-muted hover:text-white">BACK TO EVENTS</Link>
         <section className="mt-8 grid gap-8 lg:grid-cols-[1fr_360px]">

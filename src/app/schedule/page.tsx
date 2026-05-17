@@ -33,7 +33,6 @@ export default async function SchedulePage() {
       <div className="stars-container" />
       <div className="neon-grid" />
       <div className="synth-sun" />
-      <div className="scanline-overlay" />
 
       <main className="main-shell relative z-10">
         <section className="hero mb-16 pt-12">
