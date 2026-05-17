@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { formatEventWindow, getMeetUrl, getStatus, type SerializedEvent } from "@/lib/events";
+import { formatEventWindow, getMeetUrl, getStatus, type SerializedEvent, type Domain } from "@/lib/events";
 
 type EventStatusData = {
   isLive: boolean;
@@ -15,6 +15,24 @@ type EventStatusData = {
   roomName: string;
   isRegistered: boolean;
   isLoggedIn: boolean;
+};
+
+export const domainMeta: Record<Domain, { label: string; accent: string }> = {
+  "AI/ML": { label: "AI & Machine Learning", accent: "cyan" },
+  CP: { label: "Competitive Programming", accent: "yellow" },
+  "UI/UX": { label: "UI/UX Design", accent: "pink" },
+  CyberSec: { label: "Cyber Security", accent: "purple" },
+  Dev: { label: "Software Development", accent: "blue" },
+  Hackathon: { label: "Hackathons", accent: "green" },
+};
+
+export const accentColors: Record<string, { border: string; text: string; tag: string; heading: string; glow: string }> = {
+  cyan: { border: "#00e5ff", text: "text-[#00e5ff]", tag: "tag-cyan", heading: "#00e5ff", glow: "rgba(0,229,255,0.15)" },
+  yellow: { border: "#fbbc04", text: "text-[#fbbc04]", tag: "tag-yellow", heading: "#fbbc04", glow: "rgba(251,188,4,0.15)" },
+  pink: { border: "#ffafd5", text: "text-[#ffafd5]", tag: "tag-pink", heading: "#ffafd5", glow: "rgba(255,175,213,0.15)" },
+  purple: { border: "#bd5eff", text: "text-[#bd5eff]", tag: "tag-purple", heading: "#bd5eff", glow: "rgba(189,94,255,0.15)" },
+  blue: { border: "#38b6ff", text: "text-[#38b6ff]", tag: "tag-blue", heading: "#38b6ff", glow: "rgba(56,182,255,0.15)" },
+  green: { border: "#79f2a1", text: "text-[#79f2a1]", tag: "tag-green", heading: "#79f2a1", glow: "rgba(121,242,161,0.15)" },
 };
 
 function DashboardSection({
@@ -30,7 +48,7 @@ function DashboardSection({
 
   return (
     <section className="event-section">
-      <div className="mb-6 border-l-4 border-[#79f2a1] pl-6">
+      <div className="mb-6 border-l-4 border-[#ffafd5] pl-6">
         <h2 className="section-title">{title}</h2>
       </div>
       <div className="event-grid">
@@ -38,28 +56,38 @@ function DashboardSection({
           const status = getStatus(event.startTime, event.endTime, event.statusOverride);
           const isMeetOpen = statuses[event._id]?.isLive ?? event.isLive;
           const { date, time } = formatEventWindow(event.startTime, event.endTime);
+          const meta = domainMeta[event.domain];
+          const colors = accentColors[meta.accent];
 
           return (
-            <article key={event._id} className="event-card">
+            <article 
+              key={event._id} 
+              className="event-card transition-all duration-300 hover:-translate-y-1"
+              style={{
+                border: `2px solid ${colors.border}`,
+                boxShadow: `0 0 20px ${colors.glow}`,
+                background: "rgba(18, 19, 27, 0.92)",
+              }}
+            >
               <div className="event-card__content">
                 <div className="event-card__topline">
-                  <span className="tag tag-primary">{event.domain}</span>
+                  <span className={`tag ${colors.tag}`}>{event.domain}</span>
                   <Badge variant={status === "Live" ? "success" : status === "Ended" ? "muted" : "secondary"}>{status}</Badge>
                 </div>
-                <h3 className="event-card__title mt-3">{event.title}</h3>
+                <h3 className={`event-card__title mt-3 font-bold ${colors.text}`}>{event.title}</h3>
                 <p className="mt-3 text-sm text-arcade-muted">
                   {date} · {time}
                 </p>
               </div>
               <div className="event-card__footer mt-6">
                 {status === "Live" && isMeetOpen ? (
-                  <Button asChild className="w-full join-now-button">
+                  <Button asChild className="w-full gap-2 font-black tracking-widest" style={{ background: colors.border, color: meta.accent === "yellow" ? "#1a0e00" : "#000", border: "none" }}>
                     <a href={getMeetUrl(event.roomName)} target="_blank" rel="noreferrer">
                       JOIN MEET <ExternalLink className="h-4 w-4" />
                     </a>
                   </Button>
                 ) : (
-                  <Button asChild variant="outline" className="w-full">
+                  <Button asChild variant="outline" className="w-full font-black tracking-widest hover:text-white" style={{ borderColor: colors.border, color: colors.border }}>
                     <Link href={`/events/${event._id}`}>VIEW DETAILS</Link>
                   </Button>
                 )}
