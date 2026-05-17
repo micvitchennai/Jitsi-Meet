@@ -515,14 +515,14 @@ body {
 }
 
 .schedule-retro .join-now-button {
-  animation: join-button-pulse 1.6s ease-in-out infinite;
   background: #16a34a;
+  box-shadow: 0 0 18px rgba(22, 163, 74, 0.22);
   color: white;
   min-width: 180px;
 }
 
 .schedule-retro .join-now-button:hover {
-  background: #15803d;
+  background: #16a34a;
 }
 
 .schedule-retro .arcade-btn {

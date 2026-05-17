@@ -81,45 +81,9 @@ export default async function LandingPage() {
             );
           })()}
 
-
-          
         </div>
 
-        {/* Organizers Section */}
-        <div className="event-section w-full animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-          <div className="mx-auto max-w-5xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
-            <div className="mb-8 flex flex-col gap-3 text-center">
-              <h2 className="section-title">ORGANIZERS</h2>
-              <p className="mx-auto max-w-2xl text-sm leading-relaxed text-arcade-muted sm:text-base">
-                The core team at Microsoft Innovations Club ensuring the smooth operation and high-quality content of all meet sessions.
-              </p>
-            </div>
-            
-            <div className="flex flex-wrap justify-center gap-6">
-              {[
-                { name: "Srijan", role: "President" },
-                { name: "Sudeep", role: "SECRETARY" },
-                { name: "Palak", role: "VICE-SECRETARY" }
-              ].map((organizer, i) => (
-                <div key={i} className="event-card max-w-70 group hover:border-[#ffafd5]/40 transition-all duration-300">
-                  <div className="event-card__content">
-                    <div className="event-card__topline">
-                      <span className="tag tag-primary">{organizer.role}</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-4 py-4">
-                       <div className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-[#ffafd5]/30 bg-white/10 text-2xl font-black tracking-wider text-[#ffafd5] shadow-[0_0_20px_rgba(249,77,180,0.2)] group-hover:scale-110 transition-transform duration-300">
-                         {organizer.name.slice(0, 2).toUpperCase()}
-                       </div>
-                       <span className="event-card__title text-center group-hover:text-[#ffafd5] transition-colors">{organizer.name.toUpperCase()}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Sponsors Section */}
+                {/* Sponsors Section */}
         <div className="event-section w-full mt-24 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
           <div className="mx-auto max-w-5xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
             <div className="mb-8 flex flex-col gap-3 text-center">
@@ -175,7 +139,41 @@ export default async function LandingPage() {
           </div>
         </div>
 
-        <footer className="mt-32 w-full border-t-2 border-[#ffafd5]/10 pt-16 pb-20">
+        {/* Organizers Section */}
+        <div className="event-section w-full animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+          <div className="mx-auto max-w-5xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
+            <div className="mb-8 flex flex-col gap-3 text-center">
+              <h2 className="section-title">ORGANIZERS</h2>
+              <p className="mx-auto max-w-2xl text-sm leading-relaxed text-arcade-muted sm:text-base">
+                The core team at Microsoft Innovations Club ensuring the smooth operation and high-quality content of all meet sessions.
+              </p>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-6">
+              {[
+                { name: "Srijan", role: "President" },
+                { name: "Sudeep", role: "SECRETARY" },
+                { name: "Palak", role: "VICE-SECRETARY" }
+              ].map((organizer, i) => (
+                <div key={i} className="event-card max-w-70 group hover:border-[#ffafd5]/40 transition-all duration-300">
+                  <div className="event-card__content">
+                    <div className="event-card__topline">
+                      <span className="tag tag-primary">{organizer.role}</span>
+                    </div>
+                    <div className="flex flex-col items-center gap-4 py-4">
+                       <div className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-[#ffafd5]/30 bg-white/10 text-2xl font-black tracking-wider text-[#ffafd5] shadow-[0_0_20px_rgba(249,77,180,0.2)] group-hover:scale-110 transition-transform duration-300">
+                         {organizer.name.slice(0, 2).toUpperCase()}
+                       </div>
+                       <span className="event-card__title text-center group-hover:text-[#ffafd5] transition-colors">{organizer.name.toUpperCase()}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <footer className="mt-32 w-full border-t-2 border-[#ffafd5]/10 pt-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
             <div>
               <h3 className="text-primary font-black tracking-tighter text-xl mb-6">MEET PORTAL</h3>
@@ -201,6 +199,7 @@ export default async function LandingPage() {
                     <svg width="800px" height="800px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#0A66C2" d="M12.225 12.225h-1.778V9.44c0-.664-.012-1.519-.925-1.519-.926 0-1.068.724-1.068 1.47v2.834H6.676V6.498h1.707v.783h.024c.348-.594.996-.95 1.684-.925 1.802 0 2.135 1.185 2.135 2.728l-.001 3.14zM4.67 5.715a1.037 1.037 0 01-1.032-1.031c0-.566.466-1.032 1.032-1.032.566 0 1.031.466 1.032 1.032 0 .566-.466 1.032-1.032 1.032zm.889 6.51h-1.78V6.498h1.78v5.727zM13.11 2H2.885A.88.88 0 002 2.866v10.268a.88.88 0 00.885.866h10.226a.882.882 0 00.889-.866V2.865a.88.88 0 00-.889-.864z"/></svg>
                 </Link>
                 <Link href="https://chat.whatsapp.com/..." target="_blank" className="h-10 w-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-white/10 hover:text-green-400 transition-all">
+                  <Image src="/whatsapp.svg" alt="WhatsApp" width={20} height={20} className="h-5 w-5" />
                 </Link>
               </div>
             </div>
