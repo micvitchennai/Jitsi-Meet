@@ -599,12 +599,12 @@ function EventPosterModal({
                 if (currentStatus === "Ended") {
                   btnText = "EVENT ENDED";
                   isDisabled = true;
-                  btnColor = "#ea4335"; // Red
+                  btnColor = "#ea4335";
                 } else if (!isUserLoggedIn) {
                   btnText = "LOGIN TO JOIN";
                 } else if (!isRegisteredLocal) {
                   btnText = "REGISTER NOW";
-                  btnColor = "#fbbc04"; // Yellow
+                  btnColor = "#fbbc04";
                   textColor = "#1a0e00";
                 } else if (currentStatus === "Upcoming") {
                   btnText = `REGISTERED`;

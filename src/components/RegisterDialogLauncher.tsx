@@ -44,7 +44,7 @@ export function RegisterDialogLauncher({
         eventId={event._id}
         eventTitle={event.title}
         isVitStudent={isVitStudent}
-        savedProfile={savedProfile} // undefined while loading → full form shown as fallback
+        savedProfile={savedProfile}
         onSuccess={() => {
           setRegistered(true);
           setOpen(false);

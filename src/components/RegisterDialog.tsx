@@ -114,7 +114,7 @@ function QuickConfirmDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-[calc(100vw-32px)] max-w-[480px] border border-[#ffafd5]/25 bg-black/95 p-5 text-white shadow-[0_24px_80px_rgba(0,0,0,0.65)] backdrop-blur-xl sm:p-6">
+      <DialogContent className="w-[calc(100vw-32px)] max-w-[480px] border border-[#ffafd5]/25 bg-black/95 p-5 text-white rounded-xl shadow-[0_24px_80px_rgba(0,0,0,0.65)] backdrop-blur-xl sm:p-6">
         <DialogHeader>
           <DialogTitle className="text-2xl font-black tracking-normal text-[#ffafd5] sm:text-3xl">
             CONFIRM REGISTRATION
@@ -127,15 +127,15 @@ function QuickConfirmDialog({
         </DialogHeader>
 
         {/* Saved profile summary */}
-        <div className="mt-2 rounded-lg border border-white/10 bg-white/5 p-4 space-y-3">
+        <div className="mt-3 rounded-lg border border-white/10 bg-white/5 p-4 space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <User className="h-4 w-4 text-[#ffafd5]" />
             <span className="text-xs font-black tracking-widest text-[#ffafd5] uppercase">
               Your Details
             </span>
           </div>
-          <ProfileRow label="Mobile" value={profile.mobileNumber} />
-          <ProfileRow label="Reg. No." value={profile.registrationNumber} />
+          <ProfileRow label="Mobile Number" value={profile.mobileNumber} />
+          <ProfileRow label="Registration Number" value={profile.registrationNumber} />
           <ProfileRow label="Institution" value={profile.schoolCollegeName} />
           {label && (
             <ProfileRow
@@ -145,7 +145,7 @@ function QuickConfirmDialog({
           )}
         </div>
 
-        <p className="text-xs text-arcade-muted">
+        <p className="border px-4 py-4 rounded-lg text-xs font-semibold mt-4 text-arcade-muted">
           Not your details?{" "}
           <button
             type="button"
@@ -160,7 +160,7 @@ function QuickConfirmDialog({
           <Button
             variant="outline"
             onClick={onClose}
-            className="flex-1 border-white/15 text-arcade-muted hover:text-white"
+            className="flex-1 border-white/15 h-12 text-arcade-muted hover:text-white"
           >
             Cancel
           </Button>
