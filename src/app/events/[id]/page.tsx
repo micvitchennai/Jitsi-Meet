@@ -96,6 +96,10 @@ export default async function EventDetailPage({ params }: PageProps) {
                     </Link>
                   </Button>
                 )
+              ) : status === "Ended" ? (
+                <Button className="w-full join-now-button" disabled>
+                  EVENT ENDED
+                </Button>
               ) : canJoin ? (
                 <Button asChild className="w-full join-now-button">
                   <a href={getMeetUrl(event.roomName)} target="_blank" rel="noreferrer">

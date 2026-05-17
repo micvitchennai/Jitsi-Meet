@@ -274,21 +274,21 @@ function LiveEventCard({
   let isDisabled = false;
   let isPulsing = false;
 
-  if (!isLoggedIn) {
+  if (currentStatus === "Ended") {
+    btnText = "EVENT ENDED";
+    isDisabled = true;
+  } else if (!isLoggedIn) {
     btnText = "LOGIN TO JOIN";
   } else if (!isRegistered) {
-    btnText = "REGISTER FIRST";
+    btnText = "REGISTER NOW";
   } else if (currentStatus === "Upcoming") {
-    btnText = "STARTS IN COUNTDOWN"; 
-    isDisabled = true;
-  } else if (currentStatus === "Ended") {
-    btnText = "SESSION ENDED";
+    btnText = "REGISTERED"; 
     isDisabled = true;
   } else if (currentStatus === "Live" && !isLive) {
     btnText = "WAITING FOR ORGANIZER...";
     isDisabled = true;
   } else if (currentStatus === "Live" && isLive) {
-    btnText = "JOIN NOW";
+    btnText = "JOIN MEET";
     isPulsing = true;
   }
 
@@ -318,16 +318,20 @@ function LiveEventCard({
           className={`w-full gap-2 font-black tracking-widest transition-all ${
             isPulsing ? "animate-pulse shadow-[0_0_15px_#79f2a1]" : ""
           } ${
-            btnText === "REGISTER FIRST" ? "border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black" : 
-            btnText === "JOIN NOW" ? "bg-[#79f2a1] text-black hover:bg-[#79f2a1]/90" : ""
+            btnText === "REGISTER NOW" ? "border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black" : 
+            btnText === "JOIN MEET" ? "bg-[#79f2a1] text-black hover:bg-[#79f2a1]/90" : ""
           }`}
         >
-          {btnText === "STARTS IN COUNTDOWN" ? (
+          {btnText === "REGISTERED" ? (
+             <div className="flex items-center gap-2">
+               <span className="text-[10px]">REGISTERED</span>
+             </div>
+          ) : btnText === "STARTS IN COUNTDOWN" ? (
              <div className="flex items-center gap-2">
                <span className="text-[10px]">UPCOMING</span>
              </div>
           ) : btnText}
-          {(btnText === "JOIN NOW" || btnText === "LOGIN TO JOIN") && <ExternalLink className="h-4 w-4" />}
+          {(btnText === "JOIN MEET" || btnText === "LOGIN TO JOIN") && <ExternalLink className="h-4 w-4" />}
         </Button>
       </div>
     </div>
@@ -590,25 +594,25 @@ function EventPosterModal({
                 let btnColor = colors.border;
                 let textColor = domainMeta[event.domain].accent === "yellow" ? "#1a0e00" : "white";
 
-                if (!isUserLoggedIn) {
+                if (currentStatus === "Ended") {
+                  btnText = "EVENT ENDED";
+                  isDisabled = true;
+                  btnColor = "#ea4335"; // Red
+                } else if (!isUserLoggedIn) {
                   btnText = "LOGIN TO JOIN";
                 } else if (!isRegisteredLocal) {
-                  btnText = "REGISTER FIRST";
+                  btnText = "REGISTER NOW";
                   btnColor = "#fbbc04"; // Yellow
                   textColor = "#1a0e00";
                 } else if (currentStatus === "Upcoming") {
-                  btnText = `STARTS IN COUNTDOWN`;
+                  btnText = `REGISTERED`;
                   isDisabled = true;
-                } else if (currentStatus === "Ended") {
-                  btnText = "SESSION ENDED";
-                  isDisabled = true;
-                  btnColor = "#ea4335"; // Red
                 } else if (currentStatus === "Live" && !isLive) {
                   btnText = "WAITING FOR ORGANIZER...";
                   isDisabled = true;
                   btnColor = "#666";
                 } else if (currentStatus === "Live" && isLive) {
-                  btnText = "JOIN NOW";
+                  btnText = "JOIN MEET";
                   isPulsing = true;
                   btnColor = "#79f2a1";
                   textColor = "#000";
@@ -619,16 +623,21 @@ function EventPosterModal({
                     className={`h-12 w-full gap-2 font-black tracking-widest ${isPulsing ? "animate-pulse shadow-[0_0_20px_#79f2a1]" : ""}`}
                     disabled={isDisabled} 
                     style={{ background: btnColor, color: textColor, border: "none", fontSize: "0.9rem" }} 
-                    onClick={btnText === "REGISTER FIRST" ? onRegisterClick : () => onJoin(event)}
+                    onClick={btnText === "REGISTER NOW" ? onRegisterClick : () => onJoin(event)}
                   >
-                    {btnText === "STARTS IN COUNTDOWN" ? (
+                    {btnText === "REGISTERED" && currentStatus === "Upcoming" ? (
+                      <div className="flex flex-col items-center">
+                        <span className="text-[10px] opacity-70">REGISTERED - STARTS IN</span>
+                        <CountdownTimer target={event.startTime} compact />
+                      </div>
+                    ) : btnText === "STARTS IN COUNTDOWN" ? (
                       <div className="flex flex-col items-center">
                         <span className="text-[10px] opacity-70">TRANSMISSION PENDING</span>
                         <CountdownTimer target={event.startTime} compact />
                       </div>
                     ) : (
                       <>
-                        {btnText === "JOIN NOW" || btnText === "JOIN MEETING" || btnText === "LOGIN TO JOIN" ? <ExternalLink className="h-4 w-4" /> : null}
+                        {btnText === "JOIN MEET" || btnText === "JOIN MEETING" || btnText === "LOGIN TO JOIN" ? <ExternalLink className="h-4 w-4" /> : null}
                         {btnText}
                       </>
                     )}
