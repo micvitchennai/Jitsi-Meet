@@ -22,10 +22,10 @@ export async function GET(
     }
 
     let isRegistered = false;
-    if (session?.user) {
+    if (session?.user?.id) {
       const registration = await Registration.findOne({
         eventId,
-        userEmail: session.user.email,
+        userId: session.user.id,
       });
       isRegistered = !!registration;
     }
