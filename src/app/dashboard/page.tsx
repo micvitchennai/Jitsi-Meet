@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
-import { ensureSeedEvents } from "@/lib/seed";
 import { serializeEvent } from "@/lib/events";
 import Registration from "@/models/Registration";
 import ClientOnlyDashboard from "@/components/DashboardClient";
@@ -22,7 +21,6 @@ export default async function DashboardPage() {
   if (!session?.user.id) redirect("/login");
 
   await connectToDatabase();
-  await ensureSeedEvents();
 
   const registrations = await Registration.find({ userId: session.user.id }).populate("eventId").sort({ registeredAt: -1 });
   const events = registrations

@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { AdminClient } from "@/components/AdminClient";
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
-import { ensureSeedEvents } from "@/lib/seed";
 import { serializeEvent } from "@/lib/events";
 import Event from "@/models/Event";
 
@@ -15,7 +14,6 @@ export default async function AdminPage() {
   if (session.user.role !== "admin") redirect("/schedule");
 
   await connectToDatabase();
-  await ensureSeedEvents();
   const events = await Event.find({}).sort({ startTime: 1 });
 
   return (

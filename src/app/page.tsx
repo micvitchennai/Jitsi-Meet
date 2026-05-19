@@ -7,14 +7,35 @@ import { SymbolIcon } from "@/components/event-cards";
 import { connectToDatabase } from "@/lib/mongodb";
 import Event from "@/models/Event";
 import { CountdownTimer } from "@/components/CountdownTimer";
-import { formatEventWindow } from "@/lib/events";
+import { formatEventWindow, serializeEvent } from "@/lib/events";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
+import Registration from "@/models/Registration";
+import { ScheduleClient } from "@/components/ScheduleClient";
+import { isVitStudentEmail } from "@/lib/profile";
+
+export const dynamic = "force-dynamic";
 
 export default async function LandingPage() {
+  const session = await getServerSession(authOptions);
+  
   await connectToDatabase();
+
   const nextEvent = await Event.findOne({ 
     isPublished: true, 
     startTime: { $gt: new Date() } 
   }).sort({ startTime: 1 });
+
+  const events = await Event.find({ isPublished: true }).sort({ startTime: 1 });
+  const scheduledEvents = events.map(serializeEvent);
+
+  let userRegistrations: string[] = [];
+  if (session?.user.id) {
+    const regs = await Registration.find({ userId: session.user.id });
+    userRegistrations = regs.map(r => String(r.eventId));
+  }
+
+  const isVitStudent = isVitStudentEmail(session?.user.email);
 
   return (
     <div className="schedule-retro relative min-h-screen">
@@ -48,14 +69,7 @@ export default async function LandingPage() {
             elite hackathons in one unified retro-futuristic space.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 mb-20">
-            <Link href="/schedule">
-              <Button size="lg" className="arcade-btn h-16 px-10 text-xl font-black tracking-widest hover:scale-105 transition-transform">
-                ENTER PORTAL
-              </Button>
-            </Link>
-            
-          </div>
+
           
           {nextEvent && (() => {
             const eventWindow = formatEventWindow(nextEvent.startTime, nextEvent.endTime);
@@ -83,8 +97,26 @@ export default async function LandingPage() {
 
         </div>
 
-                {/* Sponsors Section */}
-        <div className="event-section w-full mt-24 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
+        {/* Schedule Section */}
+        <div id="schedule" className="event-section w-full mt-16 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+          {scheduledEvents.length === 0 ? (
+            <div className="event-card max-w-2xl mx-auto text-center py-12">
+              <h3 className="event-card__title mb-4">NO DATA DETECTED</h3>
+              <p className="text-arcade-muted">The event stream is currently offline. Check back later.</p>
+            </div>
+          ) : (
+            <div className="w-full max-w-5xl mx-auto">
+              <ScheduleClient 
+                initialEvents={scheduledEvents} 
+                userRegistrations={userRegistrations}
+                isVitStudent={isVitStudent}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Sponsors Section */}
+        <div id="sponsors" className="event-section w-full mt-24 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
           <div className="mx-auto max-w-5xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
             <div className="mb-8 flex flex-col gap-3 text-center">
               <h2 className="section-title">SPONSORS</h2>
@@ -140,7 +172,7 @@ export default async function LandingPage() {
         </div>
 
         {/* Organizers Section */}
-        <div className="event-section w-full animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+        <div id="organizers" className="event-section w-full animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
           <div className="mx-auto max-w-5xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
             <div className="mb-8 flex flex-col gap-3 text-center">
               <h2 className="section-title">ORGANIZERS</h2>
@@ -202,7 +234,7 @@ export default async function LandingPage() {
               <h3 className="text-[#ffafd5] font-black tracking-tighter text-xl mb-6">QUICK LINKS</h3>
               <ul className="space-y-3 text-sm font-bold text-arcade-muted">
                 <li><Link href="/login" className="hover:text-primary transition-colors">Login</Link></li>
-                <li><Link href="/schedule" className="hover:text-primary transition-colors">Schedule</Link></li>
+                <li><Link href="/#schedule" className="hover:text-primary transition-colors">Schedule</Link></li>
                 <li><Link href="https://meet.microsoftinnovations.club" className="hover:text-primary transition-colors">Microsoft Innovations Meet</Link></li>
               </ul>
             </div>

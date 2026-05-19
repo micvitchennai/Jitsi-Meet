@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
-import { ensureSeedEvents } from "@/lib/seed";
 import { formatEventWindow, getMeetUrl, getStatus, serializeEvent } from "@/lib/events";
 import { isVitStudentEmail } from "@/lib/profile";
 import Event from "@/models/Event";
@@ -44,7 +43,6 @@ export default async function EventDetailPage({ params }: PageProps) {
   const session = await getServerSession(authOptions);
 
   await connectToDatabase();
-  await ensureSeedEvents();
 
   const eventDocument = await Event.findOne({ _id: id, isPublished: true });
   if (!eventDocument) notFound();
