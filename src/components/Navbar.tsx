@@ -21,8 +21,14 @@ export function Navbar() {
           <span className="sm:hidden">MIC</span>
         </Link>
         <nav className="flex items-center gap-2">
-          <Link href="/schedule" className={cn("hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex")}>
+          <Link href="/#schedule" className={cn("hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex")}>
             Schedule
+          </Link>
+          <Link href="/#sponsors" className={cn("hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex")}>
+            Sponsors
+          </Link>
+          <Link href="/#organizers" className={cn("hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex")}>
+            Organizers
           </Link>
           {status === "authenticated" ? (
             <Link href="/dashboard" className="hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex">
@@ -41,7 +47,7 @@ export function Navbar() {
               Sign out
             </Button>
           ) : (
-            <Button onClick={() => signIn("google", { callbackUrl: "/schedule" })}>
+            <Button onClick={() => signIn("google", { callbackUrl: "/#schedule" })}>
               <LogIn className="h-4 w-4" />
               Sign in
             </Button>
