@@ -224,14 +224,19 @@ body {
 
 .schedule-retro .hero-logo {
   align-items: center;
-  background: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(255, 175, 213, 0.35);
-  box-shadow: 0 0 40px rgba(249, 77, 180, 0.18);
+  background: transparent;
+  border: none;
+  box-shadow: none;
   display: flex;
   height: 132px;
   justify-content: center;
   padding: 16px;
   width: 132px;
+}
+
+.schedule-retro .hero-logo img {
+  transform: scale(1.2);
+  transform-origin: center;
 }
 
 .schedule-retro .hero h1 {
