@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { UserPlus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { RegisterDialog, type SavedProfile } from "@/components/RegisterDialog";
 import { Button } from "@/components/ui/button";
 import type { SerializedEvent } from "@/lib/events";
@@ -15,6 +16,7 @@ export function RegisterDialogLauncher({
   isRegistered: boolean;
   isVitStudent: boolean;
 }) {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [registered, setRegistered] = React.useState(isRegistered);
   const [savedProfile, setSavedProfile] = React.useState<SavedProfile | null | undefined>(
@@ -48,6 +50,7 @@ export function RegisterDialogLauncher({
         onSuccess={() => {
           setRegistered(true);
           setOpen(false);
+          router.refresh();
         }}
       />
     </>
