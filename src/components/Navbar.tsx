@@ -20,7 +20,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+      <div className="mx-auto flex h-16 w-full items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-3 font-semibold" onClick={closeMenu}>
           <span className="flex h-10 w-12 items-center justify-center rounded-md bg-white/80 p-1.5 shadow-sm ring-1 ring-border dark:bg-white/10">
             <Image src="/mic-logo.png" alt="Microsoft Innovations Club logo" width={44} height={32} priority />
@@ -45,6 +45,9 @@ export function Navbar() {
           </Link>
           <Link href={getHref("#certificates")} className={cn("hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex")}>
             Certificates
+          </Link>
+          <Link href={getHref("#faqs")} className={cn("hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex")}> 
+            FAQ
           </Link>
           {session?.user.role === "admin" ? (
             <Link href="/admin" className="hidden items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex">
@@ -95,6 +98,9 @@ export function Navbar() {
           </Link>
           <Link href={getHref("#certificates")} className="rounded-md px-3 py-3 text-sm font-medium hover:bg-white/10 border-b border-white/5" onClick={closeMenu}>
             Certificates
+          </Link>
+          <Link href={getHref("#faqs")} className="rounded-md px-3 py-3 text-sm font-medium hover:bg-white/10 border-b border-white/5" onClick={closeMenu}>
+            FAQ
           </Link>
           {session?.user.role === "admin" && (
             <Link href="/admin" className="rounded-md px-3 py-3 text-sm font-medium hover:bg-white/10 border-b border-white/5 flex items-center gap-2" onClick={closeMenu}>
