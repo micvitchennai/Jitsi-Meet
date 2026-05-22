@@ -18,6 +18,7 @@ export type SerializedEvent = {
   isLive: boolean;
   isPublished: boolean;
   createdAt?: string;
+  posterUrl?: string;
 };
 
 export function getStatus(
@@ -75,6 +76,7 @@ export function serializeEvent(event: {
   isLive: boolean;
   isPublished: boolean;
   createdAt?: Date;
+  posterUrl?: string;
 }): SerializedEvent {
   return {
     _id: String(event._id),
@@ -89,6 +91,7 @@ export function serializeEvent(event: {
     isLive: event.isLive,
     isPublished: event.isPublished,
     createdAt: event.createdAt?.toISOString(),
+    posterUrl: event.posterUrl,
   };
 }
 

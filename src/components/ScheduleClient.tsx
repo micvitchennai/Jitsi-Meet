@@ -12,6 +12,7 @@ import { useSession, signIn } from "next-auth/react";
 import { toast } from "sonner";
 
 type Accent = "blue" | "green" | "red" | "yellow";
+type PosterEvent = SerializedEvent & { posterUrl?: string };
 
 const accentColors = {
   blue: { heading: "#4285f4", border: "#4285f4", tag: "tag-blue", glow: "rgba(66,133,244,0.18)", text: "text-blue" },
@@ -534,7 +535,7 @@ function EventPosterModal({
   isLoggedIn,
   onClose,
 }: {
-  event: SerializedEvent;
+  event: PosterEvent;
   isRegistered: boolean;
   isVitStudent: boolean;
   savedProfile: SavedProfile | null;
