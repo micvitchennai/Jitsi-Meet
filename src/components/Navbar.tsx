@@ -43,6 +43,9 @@ export function Navbar() {
           <Link href={getHref("#organizers")} className={cn("hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex")}>
             Organizers
           </Link>
+          <Link href={getHref("#certificates")} className={cn("hidden rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex")}>
+            Certificates
+          </Link>
           {session?.user.role === "admin" ? (
             <Link href="/admin" className="hidden items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent sm:inline-flex">
               <ShieldCheck className="h-4 w-4" />
@@ -89,6 +92,9 @@ export function Navbar() {
           </Link>
           <Link href={getHref("#organizers")} className="rounded-md px-3 py-3 text-sm font-medium hover:bg-white/10 border-b border-white/5" onClick={closeMenu}>
             Organizers
+          </Link>
+          <Link href={getHref("#certificates")} className="rounded-md px-3 py-3 text-sm font-medium hover:bg-white/10 border-b border-white/5" onClick={closeMenu}>
+            Certificates
           </Link>
           {session?.user.role === "admin" && (
             <Link href="/admin" className="rounded-md px-3 py-3 text-sm font-medium hover:bg-white/10 border-b border-white/5 flex items-center gap-2" onClick={closeMenu}>

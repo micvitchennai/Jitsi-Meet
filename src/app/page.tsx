@@ -15,6 +15,8 @@ import { isVitStudentEmail } from "@/lib/profile";
 
 export const dynamic = "force-dynamic";
 
+const certificateImageUrl = "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEk4jW2taHF5hwn3uCcqPm4ORVQJW8SBvgpL0A";
+
 export default async function LandingPage() {
   const session = await getServerSession(authOptions);
   
@@ -257,6 +259,31 @@ export default async function LandingPage() {
             </div>
           </div>
         </div>
+        <section id="certificates" className="event-section w-full mt-24 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+          <div className="mx-auto max-w-5xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
+            <div className="mb-8 flex flex-col gap-3 text-center">
+              <h2 className="section-title">CERTIFICATES</h2>
+              <p className="mx-auto max-w-2xl text-sm leading-relaxed text-arcade-muted sm:text-base">
+                Verified certificates are awarded to eligible participants after successful completion of each track.
+              </p>
+            </div>
+            {certificateImageUrl ? (
+              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-4">
+                <Image
+                  src={certificateImageUrl}
+                  alt="Certificate preview"
+                  width={1400}
+                  height={980}
+                  className="h-auto w-full rounded-2xl object-cover"
+                />
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-6 text-sm font-semibold text-red-200">
+                Certificate image unavailable. Update the certificate URL in this section when ready.
+              </div>
+            )}
+          </div>
+        </section>
         {/* FAQ Section */}
         <section className="event-section faq-section w-full max-w-5xl mt-24" id="faqs">
           <h2 className="section-title text-primary glow-title mb-8 text-center">FAQ</h2>
