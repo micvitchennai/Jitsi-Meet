@@ -31,6 +31,33 @@ const domainMeta: Record<Domain, { label: string; accent: Accent; icon: string; 
   Hackathon: { label: "Hackathons", accent: "yellow", icon: "military_tech", metaIcon: "emoji_events" },
 };
 
+const coordinatorDirectory: Record<Domain, { name: string; phone: string }[]> = {
+  "AI/ML": [
+    { name: "Arya Jayram", phone: "+91 88797 68990" },
+    { name: "Anas Arfeen", phone: "+91 779774 76096" },
+  ],
+  CP: [
+    { name: "Bhuvan Nayak", phone: "+91 89762 12399" },
+    { name: "Vraj Mevada", phone: "+91 83200 78025" },
+  ],
+  "UI/UX": [
+    { name: "Maanya Ramesh", phone: "+91 98849 01157" },
+    { name: "Heba Jahan", phone: "+91 70336 83422" },
+  ],
+  CyberSec: [
+    { name: "Ayan Chogle", phone: "+91 75888 56119" },
+    { name: "Suyash Singh", phone: "+91 62870 98983" },
+  ],
+  Dev: [
+    { name: "Gowreesh V T", phone: "+91 83001 44343" },
+    { name: "SriSai Dhakshini", phone: "+91 99406 42471" },
+  ],
+  Hackathon: [
+    { name: "Gouse Moideen", phone: "+91 86376 33305" },
+    { name: "Tarang Gupta", phone: "+91 62063 05176" },
+  ],
+};
+
 interface EventStatusData {
   isLive: boolean;
   statusOverride: "auto" | "live" | "ended";
@@ -596,6 +623,17 @@ function EventPosterModal({
                   <div style={{ marginTop: "12px", fontSize: "0.95rem", lineHeight: 1.6, color: "var(--arcade-muted)" }}>
                     <p style={{ display: "flex", alignItems: "center", gap: "8px" }}><Calendar className="h-4 w-4" /> {date}</p>
                     <p style={{ display: "flex", alignItems: "center", gap: "8px" }}><Video className="h-4 w-4" /> {time}</p>
+                  </div>
+                  <div style={{ marginTop: "16px", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "12px" }}>
+                    <p style={{ fontSize: "0.72rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.18em", color: "var(--arcade-muted)" }}>Coordinators</p>
+                    <div style={{ marginTop: "8px", display: "grid", gap: "6px", fontSize: "0.92rem" }}>
+                      {coordinatorDirectory[event.domain].map((coordinator) => (
+                        <div key={`${event.domain}-${coordinator.phone}`} style={{ display: "flex", justifyContent: "space-between", gap: "12px" }}>
+                          <span>{coordinator.name}</span>
+                          <span style={{ color: "var(--arcade-muted)", fontWeight: 700 }}>{coordinator.phone}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <div className="modal-actions mt-6" style={{ justifyContent: "stretch", flexDirection: "column" }}>
