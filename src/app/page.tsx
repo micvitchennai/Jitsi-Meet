@@ -31,6 +31,10 @@ export default async function LandingPage() {
     startTime: { $gt: new Date() } 
   }).sort({ startTime: 1 });
 
+  const nextEventWindow = nextEvent
+    ? formatEventWindow(nextEvent.startTime, nextEvent.endTime)
+    : null;
+
   const events = await Event.find({ isPublished: true }).sort({ startTime: 1 });
   const scheduledEvents = events.map(serializeEvent);
 
@@ -81,32 +85,50 @@ export default async function LandingPage() {
             Meet Portal brings together high-impact technical workshops and 
             elite hackathons in one unified retro-futuristic space.
           </p>
-          
-          <div className="hero-rule mb-24" />
-          
-          {nextEvent && (() => {
-            const eventWindow = formatEventWindow(nextEvent.startTime, nextEvent.endTime);
 
-            return (
-              <div className="mb-12 w-full max-w-4xl">
-                <div className="relative overflow-hidden border border-[#79f2a1]/30 bg-black/45 p-5 shadow-[0_0_42px_rgba(121,242,161,0.12)] backdrop-blur-xl sm:p-7">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(121,242,161,0.14),transparent_45%)]" />
-                  <div className="relative flex flex-col gap-6 lg:grid-cols-[1fr_280px] lg:items-center">
-                    <div className="text-center">
-                      <p className="mb-4 text-xs font-black uppercase tracking-[0.45em] text-[#79f2a1]">Next Event</p>
-                      <h2 className="text-2xl font-black uppercase tracking-normal text-white sm:text-3xl">{nextEvent.title}</h2>
-                      <p className="mt-3 text-sm font-bold uppercase tracking-[0.18em] text-arcade-muted">{eventWindow.date} / {eventWindow.time}</p>
-                      <p className="mt-4 line-clamp-2 text-sm leading-6 text-arcade-muted">{nextEvent.description}</p>
-                    </div>
-                    <div className="border border-[#79f2a1]/20 bg-black/50 p-4">
-                      <p className="mb-4! text-center text-[11px] font-black uppercase tracking-[0.35em] text-[#79f2a1]">Starts In</p>
-                      <CountdownTimer target={nextEvent.startTime.toISOString()} />
-                    </div>
+          <div className="mt-6 w-full max-w-3xl">
+            <div className="relative overflow-hidden rounded-3xl border border-[#79f2a1]/25 bg-black/45 p-4 shadow-[0_0_40px_rgba(121,242,161,0.18)] backdrop-blur-sm sm:p-5">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(121,242,161,0.18),transparent_55%)]" />
+              <div className="relative grid grid-cols-1 items-center gap-4 text-center sm:grid-cols-[auto_1fr] sm:text-left">
+                <div className="flex items-center justify-center">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#79f2a1]">Prize Pool</p>
+                    <p className="mt-2 text-2xl font-black uppercase tracking-[0.18em] text-white">INR 4L+</p>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center gap-2 sm:items-start">
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-arcade-muted">Big rewards for top builds</p>
+                  <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
+                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80">Tech Credits</span>
+                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80">Swags</span>
+                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80">Partner perks</span>
                   </div>
                 </div>
               </div>
-            );
-          })()}
+            </div>
+          </div>
+
+          <div className="hero-rule mb-24" />
+
+          {nextEvent && nextEventWindow && (
+            <div className="mb-12 w-full max-w-4xl">
+              <div className="relative overflow-hidden border border-[#79f2a1]/30 bg-black/45 p-5 shadow-[0_0_42px_rgba(121,242,161,0.12)] backdrop-blur-xl sm:p-7">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(121,242,161,0.14),transparent_45%)]" />
+                <div className="relative flex flex-col gap-6 lg:grid-cols-[1fr_280px] lg:items-center">
+                  <div className="text-center">
+                    <p className="mb-4 text-xs font-black uppercase tracking-[0.45em] text-[#79f2a1]">Next Event</p>
+                    <h2 className="text-2xl font-black uppercase tracking-normal text-white sm:text-3xl">{nextEvent.title}</h2>
+                    <p className="mt-3 text-sm font-bold uppercase tracking-[0.18em] text-arcade-muted">{nextEventWindow.date} / {nextEventWindow.time}</p>
+                    <p className="mt-4 line-clamp-2 text-sm leading-6 text-arcade-muted">{nextEvent.description}</p>
+                  </div>
+                  <div className="border border-[#79f2a1]/20 bg-black/50 p-4">
+                    <p className="mb-4! text-center text-[11px] font-black uppercase tracking-[0.35em] text-[#79f2a1]">Starts In</p>
+                    <CountdownTimer target={nextEvent.startTime.toISOString()} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
         </div>
 
@@ -358,7 +380,7 @@ export default async function LandingPage() {
         </section>
 
         <footer className="mt-32 w-full border-t-2 border-[#ffafd5]/10 pt-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+          <div className="grid grid-cols-1 gap-12 text-left md:grid-cols-4">
             <div>
               <h3 className="text-primary font-black tracking-tighter text-xl mb-6">MEET PORTAL</h3>
               <p className="text-arcade-muted text-sm leading-relaxed">
@@ -385,6 +407,19 @@ export default async function LandingPage() {
                 <Link href="https://chat.whatsapp.com/G5wLlrN7DMeDIh8pSFOSfu?mode=gi_t" target="_blank" className="h-10 w-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-white/10 hover:text-green-400 transition-all">
                   <Image src="/whatsapp.svg" alt="WhatsApp" width={20} height={20} className="h-5 w-5" />
                 </Link>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-emerald-300 font-black tracking-tighter text-xl mb-6">COORDINATORS</h3>
+              <div className="space-y-4 text-sm font-semibold text-arcade-muted">
+                <div>
+                  <p className="text-white/90">Gouse Moideen</p>
+                  <Link href="tel:7548769873" className="hover:text-emerald-200 transition-colors">7548769873</Link>
+                </div>
+                <div>
+                  <p className="text-white/90">Akansha</p>
+                  <Link href="tel:9879243657" className="hover:text-emerald-200 transition-colors">9879243657</Link>
+                </div>
               </div>
             </div>
           </div>
