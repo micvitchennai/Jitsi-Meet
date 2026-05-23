@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { LogIn, LogOut, ShieldCheck, Menu, X } from "lucide-react";
@@ -11,10 +10,9 @@ import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const { data: session, status } = useSession();
-  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const getHref = (hash: string) => (pathname === "/" ? hash : `/${hash}`);
+  const getHref = (hash: string) => `/#${hash.replace(/^#/, "")}`;
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
