@@ -270,58 +270,51 @@ export default async function LandingPage() {
               <div className="flex animate-marquee">
                 <div className="flex gap-6 pr-6 shrink-0">
                   {organizers.map((organizer, i) => (
-                    <div key={`copy1-${i}`} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#ffafd5]/30 hover:bg-white/10 w-60 shrink-0">
+                    <Link
+                      key={`copy1-${i}`}
+                      href={organizer.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#ffafd5]/30 hover:bg-white/10 w-60 shrink-0"
+                    >
                       <div className={`absolute inset-0 bg-linear-to-br ${organizer.accent}`} />
                       <div className="relative flex flex-col items-center justify-between gap-6 min-h-60">
                         <div className="flex h-32 w-full items-center justify-center rounded-xl bg-transparent">
-                          {organizer.url ? (
-                            <Image
-                              src={organizer.url}
-                              alt={`${organizer.name}`}
-                              width={128}
-                              height={128}
-                              className="h-32 w-32 object-contain bg-transparent transition-transform duration-300 group-hover:scale-105"
-                            />
-                          ) : (
-                            <div className="flex h-28 w-28 items-center justify-center rounded-full border-2 border-[#ffafd5]/30 bg-white/10 text-3xl font-black tracking-wider text-[#ffafd5] shadow-[0_0_20px_rgba(249,77,180,0.2)] transition-transform duration-300 group-hover:scale-105">
-                              {organizer.name.slice(0, 2).toUpperCase()}
-                            </div>
-                          )}
+                          <div className="flex h-28 w-28 items-center justify-center rounded-full border-2 border-[#ffafd5]/30 bg-white/10 text-3xl font-black tracking-wider text-[#ffafd5] shadow-[0_0_20px_rgba(249,77,180,0.2)] transition-transform duration-300 group-hover:scale-105">
+                            {organizer.name.slice(0, 2).toUpperCase()}
+                          </div>
                         </div>
                         <div className="text-center">
                           <p className="text-base font-black tracking-[0.2em] text-white/90">{organizer.name.toUpperCase()}</p>
                           <p className="mt-2 text-xs uppercase tracking-[0.25em] text-arcade-muted">{organizer.role}</p>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
                 <div className="flex gap-6 pr-6 shrink-0" aria-hidden="true">
                   {organizers.map((organizer, i) => (
-                    <div key={`copy2-${i}`} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#ffafd5]/30 hover:bg-white/10 w-60 shrink-0">
+                    <Link
+                      key={`copy2-${i}`}
+                      href={organizer.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#ffafd5]/30 hover:bg-white/10 w-60 shrink-0"
+                      aria-hidden="true"
+                    >
                       <div className={`absolute inset-0 bg-linear-to-br ${organizer.accent}`} />
                       <div className="relative flex flex-col items-center justify-between gap-6 min-h-60">
                         <div className="flex h-32 w-full items-center justify-center rounded-xl bg-transparent">
-                          {organizer.url ? (
-                            <Image
-                              src={organizer.url}
-                              alt={`${organizer.name}`}
-                              width={128}
-                              height={128}
-                              className="h-32 w-32 object-contain bg-transparent transition-transform duration-300 group-hover:scale-105"
-                            />
-                          ) : (
-                            <div className="flex h-28 w-28 items-center justify-center rounded-full border-2 border-[#ffafd5]/30 bg-white/10 text-3xl font-black tracking-wider text-[#ffafd5] shadow-[0_0_20px_rgba(249,77,180,0.2)] transition-transform duration-300 group-hover:scale-105">
-                              {organizer.name.slice(0, 2).toUpperCase()}
-                            </div>
-                          )}
+                          <div className="flex h-28 w-28 items-center justify-center rounded-full border-2 border-[#ffafd5]/30 bg-white/10 text-3xl font-black tracking-wider text-[#ffafd5] shadow-[0_0_20px_rgba(249,77,180,0.2)] transition-transform duration-300 group-hover:scale-105">
+                            {organizer.name.slice(0, 2).toUpperCase()}
+                          </div>
                         </div>
                         <div className="text-center">
                           <p className="text-base font-black tracking-[0.2em] text-white/90">{organizer.name.toUpperCase()}</p>
                           <p className="mt-2 text-xs uppercase tracking-[0.25em] text-arcade-muted">{organizer.role}</p>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -436,135 +429,112 @@ export default async function LandingPage() {
 
 const organizers = [
   {
-    name: "Srijan",
-    role: "President",
-    url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEv3e6MOhWmy6tpuiexQX81z0fGaEJbT52MDPl",
-    accent: "from-pink-500/20 via-pink-500/5 to-transparent",
+    name: "Samyak",
+    role: "Vice Chairperson",
+    linkedin: "https://www.linkedin.com/in/samyaksrijan",
+    accent: "from-rose-500/20 via-rose-500/5 to-transparent",
   },
   {
     name: "Sudeep",
-    role: "SECRETARY",
+    role: "Secretary",
+    linkedin: "https://www.linkedin.com/in/sudeep-makindar/",
     accent: "from-blue-500/20 via-blue-500/5 to-transparent",
   },
   {
     name: "Palak",
-    role: "VICE-SECRETARY",
+    role: "Co-secretary",
+    linkedin: "https://www.linkedin.com/in/palak-co-secretary",
     accent: "from-yellow-500/20 via-yellow-500/5 to-transparent",
   },
   {
-    name: "Abhinav",
-    role: "TECHNICAL HEAD",
-    accent: "from-green-500/20 via-green-500/5 to-transparent",
-  },
-  {
-    name: "Rohan",
-    role: "DESIGN HEAD",
-    accent: "from-purple-500/20 via-purple-500/5 to-transparent",
-  },
-  {
-    name: "Ishita",
-    role: "MANAGEMENT HEAD",
-    accent: "from-red-500/20 via-red-500/5 to-transparent",
-  },
-  {
-    name: "Aditya",
-    role: "WEB DEVELOPER",
-    accent: "from-cyan-500/20 via-cyan-500/5 to-transparent",
-  },
-  {
-    name: "Sneha",
-    role: "PR HEAD",
-    accent: "from-pink-500/20 via-pink-500/5 to-transparent",
-  },
-  {
-    name: "Ananya",
-    role: "MARKETING HEAD",
-    accent: "from-yellow-500/20 via-yellow-500/5 to-transparent",
-  },
-  {
-    name: "Karan",
-    role: "EVENT COORDINATOR",
-    accent: "from-blue-500/20 via-blue-500/5 to-transparent",
-  },
-  {
-    name: "Meera",
-    role: "RESEARCH LEAD",
+    name: "Suyash",
+    role: "Cybersecurity Lead",
+    linkedin: "https://www.linkedin.com/in/suyash-singh-861a31368",
     accent: "from-emerald-500/20 via-emerald-500/5 to-transparent",
   },
   {
-    name: "Varun",
-    role: "EDITORIAL HEAD",
-    accent: "from-orange-500/20 via-orange-500/5 to-transparent",
-  },
-  {
-    name: "Tanya",
-    role: "OPERATIONS LEAD",
-    accent: "from-indigo-500/20 via-indigo-500/5 to-transparent",
-  },
-  {
-    name: "Rishi",
-    role: "SPONSORSHIP HEAD",
-    accent: "from-teal-500/20 via-teal-500/5 to-transparent",
-  },
-  {
-    name: "Nikhil",
-    role: "APP DEVELOPER",
-    accent: "from-violet-500/20 via-violet-500/5 to-transparent",
-  },
-  {
-    name: "Divya",
-    role: "SOCIAL MEDIA LEAD",
-    accent: "from-fuchsia-500/20 via-fuchsia-500/5 to-transparent",
-  },
-  {
-    name: "Rahul",
-    role: "FINANCE LEAD",
-    accent: "from-amber-500/20 via-amber-500/5 to-transparent",
-  },
-  {
-    name: "Neha",
-    role: "COMMUNITY LEAD",
-    accent: "from-rose-500/20 via-rose-500/5 to-transparent",
-  },
-  {
-    name: "Vikram",
-    role: "CYBERSEC LEAD",
-    accent: "from-lime-500/20 via-lime-500/5 to-transparent",
-  },
-  {
-    name: "Kriti",
-    role: "CONTENT WRITER",
-    accent: "from-sky-500/20 via-sky-500/5 to-transparent",
-  },
-  {
-    name: "Arjun",
-    role: "VIDEO EDITOR",
-    accent: "from-red-500/20 via-red-500/5 to-transparent",
-  },
-  {
-    name: "Riya",
-    role: "GRAPHIC DESIGNER",
-    accent: "from-purple-500/20 via-purple-500/5 to-transparent",
-  },
-  {
-    name: "Manish",
-    role: "LOGISTICS HEAD",
-    accent: "from-teal-500/20 via-teal-500/5 to-transparent",
-  },
-  {
-    name: "Simran",
-    role: "OUTREACH LEAD",
+    name: "Maanya",
+    role: "UI/UX Lead",
+    linkedin: "https://www.linkedin.com/in/maanyaramesh",
     accent: "from-pink-500/20 via-pink-500/5 to-transparent",
   },
   {
-    name: "Yash",
-    role: "AI/ML RESEARCHER",
+    name: "Bhuvan",
+    role: "CP Lead",
+    linkedin: "https://www.linkedin.com/in/bhuvan-nayak/",
+    accent: "from-purple-500/20 via-purple-500/5 to-transparent",
+  },
+  {
+    name: "Gowreesh V T",
+    role: "Development Lead",
+    linkedin: "https://www.linkedin.com/in/gowreesh",
     accent: "from-cyan-500/20 via-cyan-500/5 to-transparent",
   },
   {
-    name: "Pooja",
-    role: "ALUMNI COORDINATOR",
+    name: "Vraj",
+    role: "Computer Programming Lead",
+    linkedin: "https://www.linkedin.com/in/vraj-mevada-bb379221a",
+    accent: "from-indigo-500/20 via-indigo-500/5 to-transparent",
+  },
+  {
+    name: "Anas Arfeen",
+    role: "Co-lead",
+    linkedin: "https://www.linkedin.com/in/anas-arfeen-b94870366/",
+    accent: "from-amber-500/20 via-amber-500/5 to-transparent",
+  },
+  {
+    name: "Vansh",
+    role: "MSA Lead",
+    linkedin: "https://www.linkedin.com/in/vansh-aggarwal-69b423330/",
+    accent: "from-teal-500/20 via-teal-500/5 to-transparent",
+  },
+  {
+    name: "Tanushree",
+    role: "Entrepreneurship Lead",
+    linkedin: "https://in.linkedin.com/in/tanushree-desai-912950382",
     accent: "from-yellow-500/20 via-yellow-500/5 to-transparent",
+  },
+  {
+    name: "Ayan Chogle",
+    role: "Cybersecurity Lead",
+    linkedin: "https://www.linkedin.com/in/ayan-chogle",
+    accent: "from-lime-500/20 via-lime-500/5 to-transparent",
+  },
+  {
+    name: "Sajjad",
+    role: "Publicity Head",
+    linkedin: "https://www.linkedin.com/in/ahmed-sajjad-shihab",
+    accent: "from-orange-500/20 via-orange-500/5 to-transparent",
+  },
+  {
+    name: "Heba",
+    role: "Lead",
+    linkedin: "https://www.linkedin.com/in/heba-jahan-0073a4323",
+    accent: "from-fuchsia-500/20 via-fuchsia-500/5 to-transparent",
+  },
+  {
+    name: "Preeti",
+    role: "Creatives Head",
+    linkedin: "https://www.linkedin.com/in/preeti-b-r-02047b379/",
+    accent: "from-sky-500/20 via-sky-500/5 to-transparent",
+  },
+  {
+    name: "Gouse Moideen",
+    role: "Technical Head",
+    linkedin: "https://www.linkedin.com/in/gousemoideen",
+    accent: "from-green-500/20 via-green-500/5 to-transparent",
+  },
+  {
+    name: "Ram",
+    role: "Management Secretary",
+    linkedin: "https://linkedin.com/in/ramnnn",
+    accent: "from-blue-500/20 via-blue-500/5 to-transparent",
+  },
+  {
+    name: "Humaira",
+    role: "Social Media & Content Lead",
+    linkedin: "https://www.linkedin.com/in/humaira-aisha-u-435b98382",
+    accent: "from-red-500/20 via-red-500/5 to-transparent",
   }
 ];
 
