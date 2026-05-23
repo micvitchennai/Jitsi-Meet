@@ -73,8 +73,7 @@ export default async function LandingPage() {
               alt="MICROCRAFT" 
               width={600} 
               height={180} 
-              className="object-contain max-w-full h-auto drop-shadow-[0_0_24px_rgba(249,77,180,0.52)]"
-              priority
+              className="object-contain max-w-full h-auto drop-shadow-[0_0_24px_rgba(249,77,180,0.52)]"              priority
             />
           </h1>
           
@@ -87,12 +86,12 @@ export default async function LandingPage() {
           </p>
 
           <div className="mt-6 w-full max-w-3xl">
-            <div className="relative overflow-hidden rounded-3xl border border-[#79f2a1]/25 bg-black/45 p-4 shadow-[0_0_40px_rgba(121,242,161,0.18)] backdrop-blur-sm sm:p-5">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(121,242,161,0.18),transparent_55%)]" />
+            <div className="relative overflow-hidden rounded-3xl border border-[#ffd36a]/25 bg-black/45 p-4 shadow-[0_0_40px_rgba(255,211,106,0.2)] backdrop-blur-sm sm:p-5">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(255,211,106,0.2),transparent_55%)]" />
               <div className="relative grid grid-cols-1 items-center gap-4 text-center sm:grid-cols-[auto_1fr] sm:text-left">
                 <div className="flex items-center justify-center">
                   <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#79f2a1]">Prize Pool</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#ffd36a]">Prize Pool</p>
                     <p className="mt-2 text-2xl font-black uppercase tracking-[0.18em] text-white">INR 4L+</p>
                   </div>
                 </div>
@@ -155,7 +154,7 @@ export default async function LandingPage() {
 
         {/* Sponsors Section */}
         <div id="sponsors" className="event-section w-full mt-24 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
-          <div className="mx-auto max-w-5xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
+          <div className="mx-auto max-w-6xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
             <div className="mb-8 flex flex-col gap-3 text-center">
               <h2 className="section-title">POWERED BY</h2>
               <p className="mx-auto max-w-2xl text-sm leading-relaxed text-arcade-muted sm:text-base">
@@ -255,7 +254,7 @@ export default async function LandingPage() {
 
         {/* Organizers Section */}
         <div id="organizers" className="event-section mt-24! w-full animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-          <div className="mx-auto max-w-5xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
+          <div className="mx-auto max-w-6xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
             <div className="mb-8 flex flex-col gap-3 text-center">
               <h2 className="section-title">ORGANIZERS</h2>
               <p className="mx-auto max-w-2xl text-sm leading-relaxed text-arcade-muted sm:text-base">
@@ -332,7 +331,7 @@ export default async function LandingPage() {
 
         {/* Certificates Section */}
         <section id="certificates" className="event-section w-full mt-24 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-          <div className="mx-auto max-w-5xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
+          <div className="mx-auto max-w-6xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
             <div className="mb-8 flex flex-col gap-3 text-center">
               <h2 className="section-title">CERTIFICATES</h2>
               <p className="mx-auto max-w-2xl text-sm leading-relaxed text-arcade-muted sm:text-base">
@@ -379,12 +378,12 @@ export default async function LandingPage() {
           </Accordion>
         </section>
 
-        <footer className="mt-32 w-full border-t-2 border-[#ffafd5]/10 pt-16">
+        <footer className="mt-20 w-full border-t-2 border-[#ffafd5]/10 pb-30 pt-10">
           <div className="grid grid-cols-1 gap-12 text-left md:grid-cols-4">
             <div>
-              <h3 className="text-primary font-black tracking-tighter text-xl mb-6">MEET PORTAL</h3>
+              <h3 className="text-primary font-black tracking-tighter text-xl mb-6">REGISTRATION PORTAL</h3>
               <p className="text-arcade-muted text-sm leading-relaxed">
-                A specialized platform for the Microsoft Innovations Club to manage and host high-impact technical sessions and hackathons.
+                The official hub for Microsoft Innovations Club to run workshops, hackathons, and innovation showcases.
               </p>
             </div>
             <div>
@@ -392,8 +391,21 @@ export default async function LandingPage() {
               <ul className="space-y-3 text-sm font-bold text-arcade-muted">
                 <li><Link href="/login" className="hover:text-primary transition-colors">Login</Link></li>
                 <li><Link href="/#schedule" className="hover:text-primary transition-colors">Schedule</Link></li>
-                <li><Link href="https://www.microsoftinnovations.club" className="hover:text-primary transition-colors">Microsoft Innovations Meet</Link></li>
+                <li><Link href="https://www.microsoftinnovations.club" className="hover:text-primary transition-colors">Microsoft Innovations Club</Link></li>
               </ul>
+            </div>
+            <div>
+              <h3 className="text-emerald-300 font-black tracking-tighter text-xl mb-6">COORDINATORS</h3>
+              <div className="space-y-4 text-sm font-semibold text-arcade-muted">
+                <div>
+                  <p className="text-white/90">Gouse Moideen</p>
+                  <Link href="tel:7548769873" className="hover:text-emerald-200 transition-colors">+91 86376 33305</Link>
+                </div>
+                <div>
+                  <p className="text-white/90">Akansha</p>
+                  <Link href="tel:9879243657" className="hover:text-emerald-200 transition-colors">+91 76209 23507</Link>
+                </div>
+              </div>
             </div>
             <div>
               <h3 className="text-blue-400 font-black tracking-tighter text-xl mb-6">CONNECT</h3>
@@ -408,19 +420,9 @@ export default async function LandingPage() {
                   <Image src="/whatsapp.svg" alt="WhatsApp" width={20} height={20} className="h-5 w-5" />
                 </Link>
               </div>
-            </div>
-            <div>
-              <h3 className="text-emerald-300 font-black tracking-tighter text-xl mb-6">COORDINATORS</h3>
-              <div className="space-y-4 text-sm font-semibold text-arcade-muted">
-                <div>
-                  <p className="text-white/90">Gouse Moideen</p>
-                  <Link href="tel:7548769873" className="hover:text-emerald-200 transition-colors">7548769873</Link>
-                </div>
-                <div>
-                  <p className="text-white/90">Akansha</p>
-                  <Link href="tel:9879243657" className="hover:text-emerald-200 transition-colors">9879243657</Link>
-                </div>
-              </div>
+              <Link href="mailto:mic.vit.chennai@gmail.com" className="mt-4 inline-flex text-sm font-semibold text-arcade-muted hover:text-blue-200 transition-colors">
+                Any queries Contact: mic.vit.chennai@gmail.com
+              </Link>
             </div>
           </div>
           <div className="mt-20 text-center text-xs font-bold tracking-widest opacity-40">
