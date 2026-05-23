@@ -63,7 +63,7 @@ export default async function LandingPage() {
           <h1 className="mb-4 flex justify-center">
             <span className="sr-only">MICROCRAFT</span>
             <Image 
-              src="https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKE1rbRSNtyNxaf5Isz24Y7uKnHvUEWjGwQ8So3" 
+              src="https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEEBFgnrzHSbAfolN0Uc2Ti7Iud45D3KhyjMga" 
               alt="MICROCRAFT" 
               width={600} 
               height={180} 
