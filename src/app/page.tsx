@@ -133,54 +133,98 @@ export default async function LandingPage() {
         <div id="sponsors" className="event-section w-full mt-24 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
           <div className="mx-auto max-w-5xl rounded-4xl border border-white/10 bg-black/25 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-8">
             <div className="mb-8 flex flex-col gap-3 text-center">
-              <h2 className="section-title">SPONSORS</h2>
+              <h2 className="section-title">POWERED BY</h2>
               <p className="mx-auto max-w-2xl text-sm leading-relaxed text-arcade-muted sm:text-base">
                 Partners supporting the event with tools, platforms, and visibility across the hackathon and session tracks.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {[
-                {
-                  name: "HackerRank",
-                  url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEv3e6MOhWmy6tpuiexQX81z0fGaEJbT52MDPl",
-                  accent: "from-emerald-400/20 via-emerald-400/5 to-transparent",
-                },
-                {
-                  name: "GSSoc",
-                  url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEESHt6lrzHSbAfolN0Uc2Ti7Iud45D3KhyjMg",
-                  accent: "from-cyan-400/20 via-cyan-400/5 to-transparent",
-                },
-                {
-                  name: "Google Gemini",
-                  url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEFoJjaslA09oihcYfavCU8QVN7Oswmu3e6j14",
-                  accent: "from-violet-400/20 via-violet-400/5 to-transparent",
-                },
-                {
-                  name: "Unstop",
-                  url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEdI7htgFn631F9x5hwaSXEY2mNqbjRAi8ulfs",
-                  accent: "from-sky-400/20 via-sky-400/5 to-transparent",
-                },
-              ].map((sponsor) => (
-                <div key={sponsor.name} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#ffafd5]/30 hover:bg-white/10">
-                  <div className={`absolute inset-0 bg-linear-to-br ${sponsor.accent}`} />
-                  <div className="relative flex min-h-44 flex-col items-center justify-between gap-4">
-                    <div className="flex h-24 w-full items-center justify-center rounded-xl bg-transparent px-0 py-0 transition-transform duration-300 group-hover:scale-[1.02]">
-                      <Image
-                        src={sponsor.url}
-                        alt={`${sponsor.name} logo`}
-                        width={320}
-                        height={120}
-                        className="h-full w-full object-contain"
-                      />
-                    </div>
-                    <div className="text-center">
-                      <p className="text-sm font-black tracking-[0.3em] text-white/90">{sponsor.name.toUpperCase()}</p>
-                      <p className="mt-2 text-xs uppercase tracking-[0.28em] text-arcade-muted">Official partner</p>
-                    </div>
-                  </div>
+            <div className="space-y-10">
+              <div>
+                <div className="mb-4 flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:gap-3">
+                  <span className="h-px w-16 bg-white/20 sm:w-10" />
+                  <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/70 sm:text-xs sm:tracking-[0.5em]">Official Sponsors</p>
+                  <span className="h-px w-16 bg-white/20 sm:w-10" />
                 </div>
-              ))}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {[
+                    {
+                      name: "HackerRank",
+                      url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEv3e6MOhWmy6tpuiexQX81z0fGaEJbT52MDPl",
+                      accent: "from-emerald-400/20 via-emerald-400/5 to-transparent",
+                    },
+                    {
+                      name: "Google Gemini",
+                      url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEFoJjaslA09oihcYfavCU8QVN7Oswmu3e6j14",
+                      accent: "from-violet-400/20 via-violet-400/5 to-transparent",
+                    },
+                    {
+                      name: ".xyz Domain",
+                      url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEQEDVFkl1Hn7zksoqKEgIFuwlcDyadAj6SP0V",
+                      accent: "from-blue-400/20 via-blue-400/5 to-transparent",
+                    },
+                  ].map((sponsor) => (
+                    <div key={sponsor.name} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#ffafd5]/30 hover:bg-white/10">
+                      <div className={`absolute inset-0 bg-linear-to-br ${sponsor.accent}`} />
+                      <div className="relative flex min-h-44 flex-col items-center justify-between gap-4">
+                        <div className="flex h-24 w-full items-center justify-center rounded-xl bg-transparent px-0 py-0 transition-transform duration-300 group-hover:scale-[1.02]">
+                          <Image
+                            src={sponsor.url}
+                            alt={`${sponsor.name} logo`}
+                            width={320}
+                            height={120}
+                            className="h-full w-full object-contain"
+                          />
+                        </div>
+                        <div className="text-center">
+                          <p className="text-xs font-black tracking-[0.2em] text-white/90 sm:text-sm sm:tracking-[0.3em]">{sponsor.name.toUpperCase()}</p>
+                          <p className="mt-2 text-xs uppercase tracking-[0.22em] text-arcade-muted sm:tracking-[0.28em]">Official sponsor</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="mb-4 flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:gap-3">
+                  <span className="h-px w-16 bg-white/20 sm:w-10" />
+                  <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/70 sm:text-xs sm:tracking-[0.5em]">Community Sponsors</p>
+                  <span className="h-px w-16 bg-white/20 sm:w-10" />
+                </div>
+                <div className="grid grid-cols-1 place-items-center sm:grid-cols-2">
+                  {[
+                    {
+                      name: "Unstop",
+                      url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEdI7htgFn631F9x5hwaSXEY2mNqbjRAi8ulfs",
+                      accent: "from-sky-400/20 via-sky-400/5 to-transparent",
+                    },
+                    {
+                      name: "Devfolio",
+                      url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEkjsjQpaHF5hwn3uCcqPm4ORVQJW8SBvgpL0A",
+                      accent: "from-blue-400/20 via-blue-400/5 to-transparent",
+                    },
+                  ].map((sponsor) => (
+                    <div key={sponsor.name} className="group relative w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#ffafd5]/30 hover:bg-white/10 sm:p-5">
+                      <div className={`absolute inset-0 bg-linear-to-br ${sponsor.accent}`} />
+                      <div className="relative flex min-h-36 flex-col items-center justify-between gap-4">
+                        <div className="flex h-16 w-full items-center justify-center rounded-xl bg-transparent px-0 py-0 transition-transform duration-300 group-hover:scale-[1.02] sm:h-20">
+                          <Image
+                            src={sponsor.url}
+                            alt={`${sponsor.name} logo`}
+                            width={320}
+                            height={120}
+                            className="h-full w-full object-contain"
+                          />
+                        </div>
+                        <div className="text-center">
+                          <p className="text-xs font-black tracking-[0.2em] text-white/90 sm:text-sm sm:tracking-[0.3em]">{sponsor.name.toUpperCase()}</p>
+                          <p className="mt-2 text-xs uppercase tracking-[0.22em] text-arcade-muted sm:tracking-[0.28em]">Community sponsor</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
