@@ -81,9 +81,7 @@ export default async function LandingPage() {
           <div className="hero-rule mb-8" />
 
           <p className="max-w-2xl text-lg leading-relaxed text-arcade-muted">
-            Experience the future of tech empowerment. The Microsoft Innovations Club 
-            Meet Portal brings together high-impact technical workshops and 
-            elite hackathons in one unified retro-futuristic space.
+            A summer of hands-on workshops and hackathons across 5 domains, with 10 workshops and 2 hackathons built to help you explore tech by actually building.
           </p>
 
           <div className="mt-6 w-full max-w-3xl">
@@ -93,7 +91,7 @@ export default async function LandingPage() {
                 <div className="flex items-center justify-center">
                   <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
                     <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#ffd36a]">Prize Pool</p>
-                    <p className="mt-2 text-2xl font-black uppercase tracking-[0.18em] text-white">INR 4L+</p>
+                    <p className="mt-2 text-2xl font-black uppercase tracking-[0.18em] text-white">INR 4 Lakhs+</p>
                   </div>
                 </div>
                 <div className="flex flex-col items-center gap-2 sm:items-start">
