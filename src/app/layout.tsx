@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Providers } from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { JetBrains_Mono, Press_Start_2P } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -40,6 +41,7 @@ export default async function RootLayout({
           <Navbar />
           <main className="flex-1">{children}</main>
           <Analytics />
+          <SpeedInsights />
         </Providers>
       </body>
     </html>

@@ -25,11 +25,19 @@ type Participant = {
 export function AdminClient({
   initialEvents,
   totalRegistrations,
+  registrationsToday,
+  registrationsThisWeek,
   totalUsers,
+  totalHackathonRegistrations,
+  registrationCounts,
 }: {
   initialEvents: SerializedEvent[];
   totalRegistrations: number;
+  registrationsToday: number;
+  registrationsThisWeek: number;
   totalUsers: number;
+  totalHackathonRegistrations: number;
+  registrationCounts: Record<string, number>;
 }) {
   const [events, setEvents] = React.useState(initialEvents);
   const [editing, setEditing] = React.useState<SerializedEvent | null>(null);
@@ -182,9 +190,34 @@ export function AdminClient({
           </Card>
         </div>
 
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardDescription>Registrations today</CardDescription>
+              <CardTitle className="text-3xl">{registrationsToday}</CardTitle>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardDescription>Registrations this week</CardDescription>
+              <CardTitle className="text-3xl">{registrationsThisWeek}</CardTitle>
+            </CardHeader>
+          </Card>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Card className="sm:col-span-2">
+            <CardHeader>
+              <CardDescription>Total hackathon registrations</CardDescription>
+              <CardTitle className="text-3xl">{totalHackathonRegistrations}</CardTitle>
+            </CardHeader>
+          </Card>
+        </div>
+
         {events.map((event) => {
           const { date, time } = formatEventWindow(event.startTime, event.endTime);
           const list = participants[event._id];
+          const eventRegistrations = registrationCounts[event._id] ?? 0;
 
           return (
             <Card key={event._id}>
@@ -195,6 +228,7 @@ export function AdminClient({
                       <Badge variant={event.isPublished ? "default" : "muted"}>{event.isPublished ? "Published" : "Draft"}</Badge>
                       <Badge variant="secondary">{event.domain}</Badge>
                       <Badge variant="outline">{getStatus(event.startTime, event.endTime, event.statusOverride)}</Badge>
+                      <Badge variant="outline">{eventRegistrations} registrations</Badge>
                       {event.statusOverride !== "auto" ? <Badge variant="secondary">Manual</Badge> : null}
                     </div>
                     <CardTitle>{event.title}</CardTitle>
