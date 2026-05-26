@@ -411,11 +411,11 @@ export default async function LandingPage() {
               <div className="space-y-4 text-sm font-semibold text-arcade-muted">
                 <div>
                   <p className="text-white/90">Gouse Moideen</p>
-                  <Link href="tel:7548769873" className="hover:text-emerald-200 transition-colors">+91 86376 33305</Link>
+                  <Link href="https://wa.me/918637633305?text=Hi%2C%20I%20have%20a%20question%20about%20the%20event." target="_blank" rel="noreferrer" className="hover:text-emerald-200 transition-colors">+91 86376 33305</Link>
                 </div>
                 <div>
                   <p className="text-white/90">Akansha</p>
-                  <Link href="tel:9879243657" className="hover:text-emerald-200 transition-colors">+91 76209 23507</Link>
+                  <Link href="https://wa.me/917620923507?text=Hi%2C%20I%20have%20a%20question%20about%20the%20event." target="_blank" rel="noreferrer" className="hover:text-emerald-200 transition-colors">+91 76209 23507</Link>
                 </div>
               </div>
             </div>

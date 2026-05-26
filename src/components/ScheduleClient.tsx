@@ -58,6 +58,8 @@ const coordinatorDirectory: Record<Domain, { name: string; phone: string }[]> = 
   ],
 };
 
+const toWhatsAppLink = (phone: string) => `https://wa.me/${phone.replace(/\D/g, "")}`;
+
 interface EventStatusData {
   isLive: boolean;
   statusOverride: "auto" | "live" | "ended";
@@ -636,7 +638,14 @@ function EventPosterModal({
                       {coordinatorDirectory[event.domain].map((coordinator) => (
                         <div key={`${event.domain}-${coordinator.phone}`} style={{ display: "flex", justifyContent: "space-between", gap: "12px" }}>
                           <span>{coordinator.name}</span>
-                          <span style={{ color: "var(--arcade-muted)", fontWeight: 700 }}>{coordinator.phone}</span>
+                          <a
+                            href={toWhatsAppLink(coordinator.phone)}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{ color: "var(--arcade-muted)", fontWeight: 700 }}
+                          >
+                            {coordinator.phone}
+                          </a>
                         </div>
                       ))}
                     </div>
