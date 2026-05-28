@@ -5,6 +5,8 @@ export type Domain = (typeof DOMAINS)[number];
 export type EventType = (typeof EVENT_TYPES)[number];
 export type EventStatus = "Upcoming" | "Live" | "Ended";
 
+const REGISTRATION_CLOSED_TITLES = ["Bug Hunt"];
+
 export type SerializedEvent = {
   _id: string;
   title: string;
@@ -93,6 +95,12 @@ export function serializeEvent(event: {
     createdAt: event.createdAt?.toISOString(),
     posterUrl: event.posterUrl ?? undefined,
   };
+}
+
+export function isRegistrationClosed(eventTitle: string, startTime: Date | string, now = new Date()) {
+  void startTime;
+  void now;
+  return REGISTRATION_CLOSED_TITLES.includes(eventTitle);
 }
 
 export function getMeetUrl(roomName: string) {

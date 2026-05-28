@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { isValidObjectId } from "mongoose";
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
-import { getStatus } from "@/lib/events";
+import { getStatus, isRegistrationClosed } from "@/lib/events";
 import { buildProfileSubmission } from "@/lib/profile";
 import Event from "@/models/Event";
 import Registration from "@/models/Registration";
@@ -66,6 +66,9 @@ export async function POST(request: Request) {
   await connectToDatabase();
   const event = await Event.findOne({ _id: eventId, isPublished: true });
   if (!event) return NextResponse.json({ message: "Event not found" }, { status: 404 });
+  if (isRegistrationClosed(event.title, event.startTime)) {
+    return NextResponse.json({ message: "Registration is closed for this event." }, { status: 400 });
+  }
   const currentStatus = getStatus(event.startTime, event.endTime, event.statusOverride);
   if (currentStatus !== "Upcoming" && currentStatus !== "Live") {
     return NextResponse.json({ message: "Registration is only open before or during the event" }, { status: 400 });

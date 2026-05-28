@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
-import { formatEventWindow, getMeetUrl, getStatus, serializeEvent } from "@/lib/events";
+import { formatEventWindow, getMeetUrl, getStatus, isRegistrationClosed, serializeEvent } from "@/lib/events";
 import { isVitStudentEmail } from "@/lib/profile";
 import Event from "@/models/Event";
 import Registration from "@/models/Registration";
@@ -52,6 +52,7 @@ export default async function EventDetailPage({ params }: PageProps) {
   const status = getStatus(event.startTime, event.endTime, event.statusOverride);
   const { date, time } = formatEventWindow(event.startTime, event.endTime);
   const durationMinutes = Math.round((new Date(event.endTime).getTime() - new Date(event.startTime).getTime()) / 60_000);
+  const registrationClosed = isRegistrationClosed(event.title, event.startTime);
   const isRegistered = session?.user.id
     ? Boolean(await Registration.exists({ eventId: event._id, userId: session.user.id }))
     : false;
@@ -108,6 +109,10 @@ export default async function EventDetailPage({ params }: PageProps) {
               {status === "Ended" ? (
                 <Button className="w-full join-now-button" disabled>
                   EVENT ENDED
+                </Button>
+              ) : !isRegistered && registrationClosed ? (
+                <Button className="w-full join-now-button" disabled>
+                  REGISTRATION CLOSED
                 </Button>
               ) : !isRegistered ? (
                 session?.user.id ? (

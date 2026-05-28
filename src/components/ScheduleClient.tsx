@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { RegisterDialog, type SavedProfile } from "@/components/RegisterDialog";
 import { SymbolIcon } from "@/components/event-cards";
-import { DOMAINS, formatEventWindow, getMeetUrl, getStatus, type Domain, type SerializedEvent } from "@/lib/events";
+import { DOMAINS, formatEventWindow, getMeetUrl, getStatus, isRegistrationClosed, type Domain, type SerializedEvent } from "@/lib/events";
 import { useSession, signIn } from "next-auth/react";
 import { toast } from "sonner";
 
@@ -295,6 +295,7 @@ function LiveEventCard({
   const isLive = statusData?.isLive ?? event.isLive;
   const statusOverride = statusData?.statusOverride ?? event.statusOverride;
   const currentStatus = getStatus(event.startTime, event.endTime, statusOverride);
+  const registrationClosed = isRegistrationClosed(event.title, event.startTime);
   const isLoggedIn = statusData ? statusData.isLoggedIn : true;
   const hasStatusData = !!statusData;
 
@@ -306,6 +307,9 @@ function LiveEventCard({
   if (hasStatusData) {
     if (currentStatus === "Ended") {
       btnText = "EVENT ENDED";
+      isDisabled = true;
+    } else if (!isRegistered && registrationClosed) {
+      btnText = "REGISTRATION CLOSED";
       isDisabled = true;
     } else if (!isLoggedIn) {
       btnText = "LOGIN TO JOIN";
@@ -659,6 +663,7 @@ function EventPosterModal({
                     const statusOverride = statusData?.statusOverride ?? event.statusOverride;
                     const currentStatus = getStatus(event.startTime, event.endTime, statusOverride);
                     const isUserLoggedIn = statusData ? statusData.isLoggedIn : isLoggedIn;
+                    const registrationClosed = isRegistrationClosed(event.title, event.startTime);
 
                     let btnText = "JOIN MEETING";
                     let isDisabled = false;
@@ -670,6 +675,11 @@ function EventPosterModal({
                       btnText = "EVENT ENDED";
                       isDisabled = true;
                       btnColor = "#ea4335";
+                    } else if (!isRegisteredLocal && registrationClosed) {
+                      btnText = "REGISTRATION CLOSED";
+                      isDisabled = true;
+                      btnColor = "#666";
+                      textColor = "#fff";
                     } else if (!isUserLoggedIn) {
                       btnText = "LOGIN TO JOIN";
                     } else if (!isRegisteredLocal) {
