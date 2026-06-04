@@ -40,27 +40,44 @@ export function getStatus(
   return "Ended";
 }
 
+export function getISTParts(date: Date) {
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Kolkata",
+    hour12: false,
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+  const parts = formatter.formatToParts(date);
+  const partMap: Record<string, string> = {};
+  for (const part of parts) {
+    partMap[part.type] = part.value;
+  }
+  if (partMap.hour === "24") {
+    partMap.hour = "00";
+  }
+  return partMap;
+}
+
+export function parseLocalTimeAsIST(value: string) {
+  if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/.test(value)) {
+    return new Date(value + "+05:30");
+  }
+  return new Date(value);
+}
+
 export function formatEventWindow(startTime: Date | string, endTime: Date | string) {
   const startsAt = new Date(startTime);
   const endsAt = new Date(endTime);
 
-  // Hardcoded weekday and month names for consistent server/client rendering
-  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const startParts = getISTParts(startsAt);
+  const endParts = getISTParts(endsAt);
 
-  // Manual date formatting to avoid Intl.DateTimeFormat inconsistencies
-  const weekday = weekdays[startsAt.getDay()];
-  const day = startsAt.getDate();
-  const month = months[startsAt.getMonth()];
-  const year = startsAt.getFullYear();
-  const date = `${weekday}, ${day} ${month} ${year}`;
-
-  // Format time with manual padding for minutes
-  const startHour = startsAt.getHours();
-  const startMinute = String(startsAt.getMinutes()).padStart(2, "0");
-  const endHour = endsAt.getHours();
-  const endMinute = String(endsAt.getMinutes()).padStart(2, "0");
-  const time = `${startHour}:${startMinute} - ${endHour}:${endMinute} IST`;
+  const date = `${startParts.weekday}, ${startParts.day} ${startParts.month} ${startParts.year}`;
+  const time = `${startParts.hour}:${startParts.minute} - ${endParts.hour}:${endParts.minute} IST`;
 
   return { date, time };
 }
@@ -110,9 +127,9 @@ export function getMeetUrl(roomName: string) {
 
 export function generateRoomName(domain: string, type: string, startTime: string | Date) {
   const date = new Date(startTime);
-  const day = date.getDate();
-  const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-  const month = months[date.getMonth()];
+  const startParts = getISTParts(date);
+  const day = startParts.day;
+  const month = startParts.month.toLowerCase();
   const domainSlug = domain.toLowerCase().replace(/[^a-z0-9]/g, "");
   const typeSlug = type.toLowerCase().replace(/[^a-z0-9]/g, "");
   return `${domainSlug}-${typeSlug}-${day}${month}`;

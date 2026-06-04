@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
-import { generateRoomName, serializeEvent } from "@/lib/events";
+import { generateRoomName, serializeEvent, parseLocalTimeAsIST } from "@/lib/events";
 import Event from "@/models/Event";
 
 export async function GET(request: Request) {
@@ -41,8 +41,8 @@ export async function POST(request: Request) {
   const missing = requiredFields.filter(f => f[0] !== "roomName").find((field) => !field[1]);
   if (missing) return NextResponse.json({ message: `${missing[0]} is required` }, { status: 400 });
 
-  const startTime = new Date(body.startTime);
-  const endTime = new Date(body.endTime);
+  const startTime = parseLocalTimeAsIST(body.startTime);
+  const endTime = parseLocalTimeAsIST(body.endTime);
   
   const finalRoomName = roomName || generateRoomName(body.domain, body.type, startTime);
   if (Number.isNaN(startTime.getTime()) || Number.isNaN(endTime.getTime()) || startTime >= endTime) {

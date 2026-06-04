@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { RegisterDialog, type SavedProfile } from "@/components/RegisterDialog";
 import { SymbolIcon } from "@/components/event-cards";
-import { DOMAINS, getMeetUrl, getStatus, isRegistrationClosed, type Domain, type SerializedEvent } from "@/lib/events";
+import { DOMAINS, getMeetUrl, getStatus, isRegistrationClosed, getISTParts, type Domain, type SerializedEvent } from "@/lib/events";
 import { useSession, signIn } from "next-auth/react";
 import { toast } from "sonner";
 
@@ -64,20 +64,11 @@ function formatEventWindowRaw(startTime: Date | string, endTime: Date | string) 
   const startsAt = new Date(startTime);
   const endsAt = new Date(endTime);
 
-  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const startParts = getISTParts(startsAt);
+  const endParts = getISTParts(endsAt);
 
-  const weekday = weekdays[startsAt.getUTCDay()];
-  const day = startsAt.getUTCDate();
-  const month = months[startsAt.getUTCMonth()];
-  const year = startsAt.getUTCFullYear();
-  const date = `${weekday}, ${day} ${month} ${year}`;
-
-  const startHour = startsAt.getUTCHours();
-  const startMinute = String(startsAt.getUTCMinutes()).padStart(2, "0");
-  const endHour = endsAt.getUTCHours();
-  const endMinute = String(endsAt.getUTCMinutes()).padStart(2, "0");
-  const time = `${startHour}:${startMinute} - ${endHour}:${endMinute}`;
+  const date = `${startParts.weekday}, ${startParts.day} ${startParts.month} ${startParts.year}`;
+  const time = `${startParts.hour}:${startParts.minute} - ${endParts.hour}:${endParts.minute}`;
 
   return { date, time };
 }

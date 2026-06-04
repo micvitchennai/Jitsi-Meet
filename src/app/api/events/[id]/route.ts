@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { isValidObjectId } from "mongoose";
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
-import { DOMAINS, EVENT_TYPES, generateRoomName, serializeEvent } from "@/lib/events";
+import { DOMAINS, EVENT_TYPES, generateRoomName, serializeEvent, parseLocalTimeAsIST } from "@/lib/events";
 import Event from "@/models/Event";
 import Registration from "@/models/Registration";
 
@@ -42,8 +42,8 @@ export async function PUT(request: Request, { params }: Params) {
     description: typeof body.description === "string" ? body.description.trim() : undefined,
     domain: body.domain,
     type: body.type,
-    startTime: body.startTime ? new Date(body.startTime) : undefined,
-    endTime: body.endTime ? new Date(body.endTime) : undefined,
+    startTime: body.startTime ? parseLocalTimeAsIST(body.startTime) : undefined,
+    endTime: body.endTime ? parseLocalTimeAsIST(body.endTime) : undefined,
     roomName: typeof body.roomName === "string" ? body.roomName.trim() : undefined,
     posterUrl: typeof body.posterUrl === "string" ? body.posterUrl.trim() || undefined : undefined,
     statusOverride: ["auto", "live", "ended"].includes(body.statusOverride) ? body.statusOverride : undefined,

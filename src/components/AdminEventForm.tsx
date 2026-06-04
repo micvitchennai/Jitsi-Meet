@@ -27,8 +27,8 @@ function getInitialForm(event?: SerializedEvent | null): EventFormState {
       description: event.description,
       domain: event.domain,
       type: event.type,
-      startTime: toLocalDatetime(event.startTime),
-      endTime: toLocalDatetime(event.endTime),
+      startTime: toISTDatetimeLocal(event.startTime),
+      endTime: toISTDatetimeLocal(event.endTime),
       roomName: event.roomName,
       posterUrl: event.posterUrl ?? "",
       statusOverride: event.statusOverride,
@@ -63,11 +63,11 @@ const emptyForm: EventFormState = {
   isPublished: false,
 };
 
-function toLocalDatetime(value: string) {
+function toISTDatetimeLocal(value: string) {
   const date = new Date(value);
-  const offset = date.getTimezoneOffset();
-  const local = new Date(date.getTime() - offset * 60_000);
-  return local.toISOString().slice(0, 16);
+  // IST is UTC + 5.5 hours (+330 minutes)
+  const istTime = new Date(date.getTime() + 330 * 60_000);
+  return istTime.toISOString().slice(0, 16);
 }
 
 export function AdminEventForm({
