@@ -34,17 +34,6 @@ const getDevfolioSlug = (title: string) => {
 };
 
 export function HackathonsSection({ hackathons }: HackathonsSectionProps) {
-  // Load Devfolio SDK Script
-  React.useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://apply.devfolio.co/v2/sdk.js";
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
 
   return (
     <div id="hackathons" className="event-section w-full mt-24">
@@ -152,14 +141,23 @@ export function HackathonsSection({ hackathons }: HackathonsSectionProps) {
 
                 {/* Devfolio Registration Button Container */}
                 <div className="pt-4 flex flex-col gap-2">
-                  <div 
-                    className="apply-button" 
-                    data-hackathon-slug={slug} 
-                    data-button-theme="dark" 
-                    style={{ height: "44px", width: "312px" }} 
-                  />
+                  <a
+                    href={`https://${slug}.devfolio.co`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-3 px-6 py-3 rounded-xl bg-[#3770FF] text-white font-bold hover:bg-[#3770FF]/90 transition-all duration-300 shadow-[0_0_20px_rgba(55,112,255,0.4)] hover:shadow-[0_0_30px_rgba(55,112,255,0.6)] w-full max-w-[312px] text-center"
+                  >
+                    <Image
+                      src="https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEkjsjQpaHF5hwn3uCcqPm4ORVQJW8SBvgpL0A"
+                      alt="Devfolio Logo"
+                      width={18}
+                      height={18}
+                      className="object-contain brightness-0 invert"
+                    />
+                    <span className="uppercase tracking-wider text-xs">Register with Devfolio</span>
+                  </a>
                   <p className="text-[10px] text-arcade-muted italic max-w-xs pl-1">
-                    Powered by Devfolio. Make sure your account details are complete before applying.
+                    Redirects directly to Devfolio. Make sure your account details are complete before applying.
                   </p>
                 </div>
               </div>
