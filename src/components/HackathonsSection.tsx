@@ -28,7 +28,7 @@ const getDevfolioSlug = (title: string) => {
     return process.env.NEXT_PUBLIC_DEVFOLIO_VIBEATHON_SLUG || "vibeathon";
   }
   if (lowerTitle.includes("arcnight")) {
-    return process.env.NEXT_PUBLIC_DEVFOLIO_ARCNIGHT_SLUG || "microcraft-arcnight";
+    return process.env.NEXT_PUBLIC_DEVFOLIO_ARCNIGHT_SLUG || "microcarft-arcnight";
   }
   return lowerTitle.replace(/\s+/g, "-");
 };
@@ -141,24 +141,37 @@ export function HackathonsSection({ hackathons }: HackathonsSectionProps) {
 
                 {/* Devfolio Registration Button Container */}
                 <div className="pt-4 flex flex-col gap-2">
-                  <a
-                    href={`https://${slug}.devfolio.co`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center justify-center gap-3 px-6 py-3 rounded-xl border-2 border-[#3770FF] text-[#3770FF] hover:bg-[#3770FF] hover:text-white font-black tracking-widest uppercase transition-all duration-300 shadow-[0_0_15px_rgba(55,112,255,0.15)] hover:shadow-[0_0_25px_rgba(55,112,255,0.4)] w-full max-w-[312px] text-center"
-                  >
-                    <Image
-                      src="https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEkjsjQpaHF5hwn3uCcqPm4ORVQJW8SBvgpL0A"
-                      alt="Devfolio Logo"
-                      width={18}
-                      height={18}
-                      className="object-contain transition-all duration-300 group-hover:brightness-0 group-hover:invert"
-                    />
-                    <span className="text-xs">Register with Devfolio</span>
-                  </a>
-                  <p className="text-[10px] text-arcade-muted italic max-w-xs pl-1">
-                    Redirects directly to Devfolio. Make sure your account details are complete before applying.
-                  </p>
+                  {event.title.toLowerCase().includes("vibeathon") ? (
+                    <>
+                      <div className="inline-flex items-center justify-center gap-3 px-6 py-3 rounded-xl border-2 border-white/10 text-arcade-muted font-black tracking-widest uppercase w-full max-w-[312px] text-center bg-white/5 cursor-not-allowed">
+                        <span className="text-xs">TBA (To Be Announced)</span>
+                      </div>
+                      <p className="text-[10px] text-arcade-muted italic max-w-xs pl-1">
+                        Registration details will be announced soon. Keep an eye on our social handles.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <a
+                        href={`https://${slug}.devfolio.co`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center justify-center gap-3 px-6 py-3 rounded-xl border-2 border-[#3770FF] text-[#3770FF] hover:bg-[#3770FF] hover:text-white font-black tracking-widest uppercase transition-all duration-300 shadow-[0_0_15px_rgba(55,112,255,0.15)] hover:shadow-[0_0_25px_rgba(55,112,255,0.4)] w-full max-w-[312px] text-center"
+                      >
+                        <Image
+                          src="https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEkjsjQpaHF5hwn3uCcqPm4ORVQJW8SBvgpL0A"
+                          alt="Devfolio Logo"
+                          width={18}
+                          height={18}
+                          className="object-contain transition-all duration-300 group-hover:brightness-0 group-hover:invert"
+                        />
+                        <span className="text-xs">Register with Devfolio</span>
+                      </a>
+                      <p className="text-[10px] text-arcade-muted italic max-w-xs pl-1">
+                        Redirects directly to Devfolio. Make sure your account details are complete before applying.
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
