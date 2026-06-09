@@ -145,16 +145,16 @@ export function HackathonsSection({ hackathons }: HackathonsSectionProps) {
                     href={`https://${slug}.devfolio.co`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-3 px-6 py-3 rounded-xl bg-[#3770FF] text-white font-bold hover:bg-[#3770FF]/90 transition-all duration-300 shadow-[0_0_20px_rgba(55,112,255,0.4)] hover:shadow-[0_0_30px_rgba(55,112,255,0.6)] w-full max-w-[312px] text-center"
+                    className="group inline-flex items-center justify-center gap-3 px-6 py-3 rounded-xl border-2 border-[#3770FF] text-[#3770FF] hover:bg-[#3770FF] hover:text-white font-black tracking-widest uppercase transition-all duration-300 shadow-[0_0_15px_rgba(55,112,255,0.15)] hover:shadow-[0_0_25px_rgba(55,112,255,0.4)] w-full max-w-[312px] text-center"
                   >
                     <Image
                       src="https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEkjsjQpaHF5hwn3uCcqPm4ORVQJW8SBvgpL0A"
                       alt="Devfolio Logo"
                       width={18}
                       height={18}
-                      className="object-contain brightness-0 invert"
+                      className="object-contain transition-all duration-300 group-hover:brightness-0 group-hover:invert"
                     />
-                    <span className="uppercase tracking-wider text-xs">Register with Devfolio</span>
+                    <span className="text-xs">Register with Devfolio</span>
                   </a>
                   <p className="text-[10px] text-arcade-muted italic max-w-xs pl-1">
                     Redirects directly to Devfolio. Make sure your account details are complete before applying.
