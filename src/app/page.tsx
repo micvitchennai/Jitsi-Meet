@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { SymbolIcon } from "@/components/event-cards";
 
 import { connectToDatabase } from "@/lib/mongodb";
+import { HackathonsSection } from "@/components/HackathonsSection";
 import Event from "@/models/Event";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { formatEventWindow, serializeEvent } from "@/lib/events";
@@ -37,7 +38,8 @@ export default async function LandingPage() {
     : null;
 
   const events = await Event.find({ isPublished: true }).sort({ startTime: 1 });
-  const scheduledEvents = events.map(serializeEvent);
+  const workshopEvents = events.filter(e => e.type !== "hackathon").map(serializeEvent);
+  const hackathonEvents = events.filter(e => e.type === "hackathon").map(serializeEvent);
 
   let userRegistrations: string[] = [];
   if (session?.user.id) {
@@ -135,7 +137,7 @@ export default async function LandingPage() {
           <div className="mb-10 flex flex-col gap-3 text-center">
             <h2 className="section-title">SCHEDULE</h2>
           </div>
-          {scheduledEvents.length === 0 ? (
+          {workshopEvents.length === 0 ? (
             <div id="events-section" className="event-card max-w-2xl mx-auto text-center py-12">
               <h3 className="event-card__title mb-4">NO DATA DETECTED</h3>
               <p className="text-arcade-muted">The event stream is currently offline. Check back later.</p>
@@ -143,13 +145,18 @@ export default async function LandingPage() {
           ) : (
             <div id="events-section" className="w-full max-w-5xl mx-auto">
               <ScheduleClient 
-                initialEvents={scheduledEvents} 
+                initialEvents={workshopEvents} 
                 userRegistrations={userRegistrations}
                 isVitStudent={isVitStudent}
               />
             </div>
           )}
         </div>
+
+        {/* Hackathons Section */}
+        {hackathonEvents.length > 0 && (
+          <HackathonsSection hackathons={hackathonEvents} />
+        )}
 
         {/* Sponsors Section */}
         <div id="sponsors" className="event-section w-full mt-24 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
@@ -168,7 +175,7 @@ export default async function LandingPage() {
                   <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/70 sm:text-xs sm:tracking-[0.5em]">Official Sponsors</p>
                   <span className="h-px w-16 bg-white/20 sm:w-10" />
                 </div>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   {[
                     {
                       name: "HackerRank",
@@ -185,11 +192,6 @@ export default async function LandingPage() {
                       url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEQEDVFkl1Hn7zksoqKEgIFuwlcDyadAj6SP0V",
                       accent: "from-blue-400/20 via-blue-400/5 to-transparent",
                     },
-                    {
-                      name: "Bloom",
-                      url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEjWJiZewQyu54mGkgTXJiCO360YzKMF7waoWA",
-                      accent: "from-pink-400/20 via-pink-400/5 to-transparent",
-                    }
                   ].map((sponsor) => (
                     <div key={sponsor.name} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#ffafd5]/30 hover:bg-white/10">
                       <div className={`absolute inset-0 bg-linear-to-br ${sponsor.accent}`} />
@@ -215,21 +217,21 @@ export default async function LandingPage() {
               <div>
                 <div className="mb-4 flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:gap-3">
                   <span className="h-px w-16 bg-white/20 sm:w-10" />
-                  <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/70 sm:text-xs sm:tracking-[0.5em]">Community Sponsors</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/70 sm:text-xs sm:tracking-[0.5em]">Community Sponsors (Gold Tier)</p>
                   <span className="h-px w-16 bg-white/20 sm:w-10" />
                 </div>
                 <div className="flex flex-wrap justify-center">
                   {[
-                    {
-                      name: "Unstop",
-                      url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEdI7htgFn631F9x5hwaSXEY2mNqbjRAi8ulfs",
-                      accent: "from-sky-400/20 via-sky-400/5 to-transparent",
-                    },
                     // {
-                    //   name: "Devfolio",
-                    //   url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEkjsjQpaHF5hwn3uCcqPm4ORVQJW8SBvgpL0A",
-                    //   accent: "from-blue-400/20 via-blue-400/5 to-transparent",
+                    //   name: "Unstop",
+                    //   url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEdI7htgFn631F9x5hwaSXEY2mNqbjRAi8ulfs",
+                    //   accent: "from-sky-400/20 via-sky-400/5 to-transparent",
                     // },
+                    {
+                      name: "Devfolio",
+                      url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEkjsjQpaHF5hwn3uCcqPm4ORVQJW8SBvgpL0A",
+                      accent: "from-blue-400/20 via-blue-400/5 to-transparent",
+                    },
                   ].map((sponsor) => (
                     <div key={sponsor.name} className="group relative w-full max-w-xs overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-3 transition-all duration-300 hover:-translate-y-1 hover:border-[#ffafd5]/30 hover:bg-white/10 sm:p-4">
                       <div className={`absolute inset-0 bg-linear-to-br ${sponsor.accent}`} />

@@ -202,7 +202,7 @@ export function ScheduleClient({
     <div className="space-y-16">
       <div className="mb-12 flex justify-center">
         <div className="flex flex-wrap justify-center gap-1 rounded-xl border border-white/10 bg-black/40 p-1.5 backdrop-blur-md">
-          {["All", ...DOMAINS].map((domain) => (
+          {["All", ...DOMAINS.filter(d => d !== "Hackathon")].map((domain) => (
             <button
               key={domain}
               onClick={() => setFilter(domain)}
