@@ -455,6 +455,13 @@ export default async function LandingPage() {
 
 const organizers = [
   {
+    name: "Durgesh",
+    role: "HackerRank Campus Ambassador",
+    linkedin: "https://www.linkedin.com/in/durgesh-kumar-5a0401310/",
+    photo: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEQD8g1Pl1Hn7zksoqKEgIFuwlcDyadAj6SP0V",
+    accent: "from-pink-500/20 via-pink-500/5 to-transparent",
+  },
+  {
     name: "Samyak",
     role: "Vice Chairperson",
     linkedin: "https://www.linkedin.com/in/samyaksrijan",
