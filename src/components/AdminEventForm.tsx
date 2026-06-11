@@ -149,7 +149,7 @@ export function AdminEventForm({
         </div>
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="roomName">Jitsi room name</Label>
+        <Label htmlFor="roomName">Zoho Meet Embeded Url Plzz...</Label>
         <Input id="roomName" required value={form.roomName} onChange={(e) => setForm({ ...form, roomName: e.target.value })} />
       </div>
       <div className="grid gap-2">
