@@ -192,6 +192,11 @@ export default async function LandingPage() {
                       url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEQEDVFkl1Hn7zksoqKEgIFuwlcDyadAj6SP0V",
                       accent: "from-blue-400/20 via-blue-400/5 to-transparent",
                     },
+                    {
+                      name: "TrainSec",
+                      url: "https://h8z6stjynz.ufs.sh/f/nEev6VX4XfKEHC2fKst1ltk8sCVhvgKTpUzQyXnafuj70O5i",
+                      accent: "from-rose-400/20 via-rose-400/5 to-transparent",
+                    }
                   ].map((sponsor) => (
                     <div key={sponsor.name} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#ffafd5]/30 hover:bg-white/10">
                       <div className={`absolute inset-0 bg-linear-to-br ${sponsor.accent}`} />
